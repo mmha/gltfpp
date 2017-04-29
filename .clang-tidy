@@ -1,0 +1,8 @@
+---
+Checks:          'clang-diagnostic-*,clang-analyzer-*,clang-analyzer-alpha*,cppcoreguidelines-*,modernize-*,performance-*,readability-*,-readability-named-parameter,misc-*,google-runtime-int,llvm-include-order'
+
+WarningsAsErrors: ''
+HeaderFilterRegex: ''
+AnalyzeTemporaryDtors: false
+...
+

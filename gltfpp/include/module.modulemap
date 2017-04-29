@@ -1,0 +1,28 @@
+module thirdparty [system] {
+	module GSL [system] {
+		umbrella header "../../3rdparty/GSL/include/gsl/gsl"
+		export *
+	}
+
+	module boost_outcome [system] {
+		umbrella header "../../3rdparty/boost.outcome/include/boost/outcome.hpp"
+		export *
+	}
+
+	module json [system] {
+		umbrella header "../../3rdparty/json/src/json.hpp"
+		export *
+	}
+
+	export *
+}
+
+module glTF {
+  module parsers {
+	umbrella header "parsers/all.h"
+  }
+
+  use thirdparty
+  umbrella header "glTF.h"
+  export *
+}
