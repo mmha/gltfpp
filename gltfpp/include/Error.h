@@ -5,12 +5,21 @@
 namespace gltfpp {
 	inline namespace v1 {
 		struct gltf_error : std::error_code {
-			enum cases { key_not_found, index_out_of_range };
+			enum cases { key_not_found, index_out_of_range, type_error };
 
 			gltf_error() = default;
 			inline gltf_error(cases error);
 		};
+	}
+}
 
+namespace std {
+	template <>
+	struct is_error_code_enum<gltfpp::gltf_error::cases> : std::true_type {};
+}	// namespace std
+
+namespace gltfpp {
+	inline namespace v1 {
 		namespace detail {
 			struct gltf_error_category final : std::error_category {
 				const char *name() const noexcept override {
@@ -23,6 +32,8 @@ namespace gltfpp {
 							return "Key not found";
 						case gltf_error::index_out_of_range:
 							return "Index out of range";
+						case gltf_error::type_error:
+							return "Unexpected data type";
 						default:
 							return "Unknown Error";
 					}
@@ -34,6 +45,8 @@ namespace gltfpp {
 							return std::errc::bad_message;
 						case gltf_error::index_out_of_range:
 							return std::errc::result_out_of_range;
+						case gltf_error::type_error:
+							return std::errc::argument_out_of_domain;
 						default:
 							return std::error_condition(error, *this);
 					}
@@ -76,8 +89,3 @@ namespace gltfpp {
 		}
 	}	// namespace v1
 }	// namespace gltfpp
-
-namespace std {
-	template <>
-	struct is_error_code_enum<gltfpp::gltf_error::cases> : std::true_type {};
-}	// namespace std

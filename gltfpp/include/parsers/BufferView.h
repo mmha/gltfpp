@@ -12,8 +12,13 @@ namespace gltfpp {
 				std::ptrdiff_t offset{};
 				std::ptrdiff_t length{};
 
-				auto result = field(bufferIdx, "buffer")(ctx) >> field(offset, "byteOffset") >>
-							  field(length, "byteLength") >> aggregate(view);
+				// clang-format off
+				auto result =
+				   field(bufferIdx, "buffer")(ctx)
+				>> field(offset, "byteOffset")
+				>> field(length, "byteLength")
+				>> aggregate(view);
+				// clang-format on
 
 				if(!result) {
 					return result;
@@ -25,8 +30,14 @@ namespace gltfpp {
 
 				auto &buffer = ctx.root->buffers.value()[bufferIdx];
 
+				if( length < 0 ||
+					offset > buffer.get().size() ||
+					offset + length > buffer.get().size()) {
+					return make_unexpected(gltf_error::index_out_of_range);
+				}
+
 				view.buffer = std::addressof(buffer);
-				view.span = {buffer.data.data() + offset, length};	// TODO range check
+				view.span = {buffer.get().data() + offset, length};
 
 				return ctx;
 			};

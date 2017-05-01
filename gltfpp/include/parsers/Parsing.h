@@ -111,7 +111,7 @@ namespace gltfpp {
 					return make_unexpected(gltf_error::key_not_found);
 				}
 				if(!ctx.json->is_array()) {
-					return make_unexpected(gltf_error::key_not_found);	// FIXME type error
+					return make_unexpected(gltf_error::type_error);
 				}
 
 				s.resize(ctx.json->size());
