@@ -7,3 +7,6 @@ target_include_directories(microsoft_gsl SYSTEM INTERFACE GSL/include)
 add_library(boost_outcome INTERFACE)
 target_include_directories(boost_outcome SYSTEM INTERFACE "boost.outcome/include")
 target_compile_definitions(boost_outcome INTERFACE BOOST_OUTCOME_ENABLE_ADVANCED)
+
+add_library(Catch INTERFACE)
+target_include_directories(Catch SYSTEM INTERFACE "Catch/include")

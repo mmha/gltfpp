@@ -31,8 +31,8 @@ namespace gltfpp {
 				auto &buffer = ctx.root->buffers.value()[bufferIdx];
 
 				if( length < 0 ||
-					offset > buffer.get().size() ||
-					offset + length > buffer.get().size()) {
+					static_cast<std::size_t>(offset) > buffer.get().size() ||
+					static_cast<std::size_t>(offset + length) > buffer.get().size()) {
 					return make_unexpected(gltf_error::index_out_of_range);
 				}
 

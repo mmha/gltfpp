@@ -1,6 +1,3 @@
-find_package(Catch)
-
-if(Catch_FOUND)
 add_executable(gltfpp_test
 	Asset.cpp
 	Buffer.cpp
@@ -8,8 +5,7 @@ add_executable(gltfpp_test
 	testmain.cpp
 )
 
-target_link_libraries(gltfpp_test PRIVATE Catch::Catch gltfpp)
-endif()
+target_link_libraries(gltfpp_test PRIVATE Catch gltfpp)
 
 add_executable(simple_consumer
 	simple_consumer.cpp
