@@ -6,7 +6,8 @@ add_library(gltfpp
 )
 
 target_link_libraries(gltfpp PUBLIC nlohmann_json microsoft_gsl boost_outcome)
-target_include_directories(gltfpp PUBLIC "../include" ${Boost_INCLUDE_DIR})
+target_include_directories(gltfpp SYSTEM PUBLIC ${Boost_INCLUDE_DIR})
+target_include_directories(gltfpp PUBLIC "../include")
 #target_compile_options(gltfpp PRIVATE -fno-exceptions)
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 	target_compile_options(gltfpp PRIVATE -Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic)

@@ -14,12 +14,15 @@ namespace gltfpp {
 				   field(b.uri, "uri")(ctx)
 				>> field(b.name, "name")
 				>> field(byteLength, "byteLength")
-				>> field(b.extras, "extras") >> field(b.extensions, "extensions");
+				>> field(b.extras, "extras")
+				>> field(b.extensions, "extensions");
 				// clang-format on
 
-				if(result) {
-					b.data.resize(byteLength);
+				if(!result) {
+					return result;
 				}
+
+				b.data.resize(byteLength);
 
 				// TODO deserialize or download actual data
 
