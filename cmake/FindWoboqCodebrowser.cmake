@@ -1,0 +1,18 @@
+find_program(WOBOQ_GENERATOR_EXECUTABLE codebrowser_generator
+    HINTS $ENV{WOBOQ_GENERATOR_DIR} $ENV{WOBOQ_DIR}
+    PATH_SUFFIXES bin
+)
+
+find_program(WOBOQ_INDEX_GENERATOR_EXECUTABLE codebrowser_indexgenerator
+    HINTS $ENV{WOBOQ_GENERATOR_DIR} $ENV{WOBOQ_DIR}
+    PATH_SUFFIXES bin
+)
+
+find_path(WOBOQ_DATA_DIR codebrowser.js
+	HINTS $ENV{WOBOQ_DATA_DIR} "$ENV{WOBOQ_DIR}/data"
+)
+ 
+include(FindPackageHandleStandardArgs)
+ 
+find_package_handle_standard_args(WoboqCodebrowser DEFAULT_MSG WOBOQ_GENERATOR_EXECUTABLE WOBOQ_INDEX_GENERATOR_EXECUTABLE WOBOQ_DATA_DIR)
+mark_as_advanced(WOBOQ_GENERATOR_EXECUTABLE WOBOQ_INDEX_GENERATOR_EXECUTABLE WOBOQ_DATA_DIR)
