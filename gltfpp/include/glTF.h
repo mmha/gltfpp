@@ -14,6 +14,7 @@
 #include "Scene.h"
 #include "Skin.h"
 #include "Texture.h"
+#include "parsers/Parsing.h"
 #include <boost/hana/define_struct.hpp>
 #include <json.hpp>
 #include <vector>
@@ -25,7 +26,7 @@ namespace gltfpp {
 									 (Asset, asset),
 									 (option<std::vector<Animation>>, animations),
 									 (option<std::vector<Buffer>>, buffers),
-									 //(option<std::vector<BufferView>>, bufferViews),
+									 (option<std::vector<BufferView>>, bufferViews),
 									 (option<nlohmann::json>, extensions),
 									 (option<nlohmann::json>, extras));
 			/*

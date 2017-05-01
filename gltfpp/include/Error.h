@@ -10,8 +10,8 @@ namespace gltfpp {
 			gltf_error() = default;
 			inline gltf_error(cases error);
 		};
-	}
-}
+	}	// namespace v1
+}	// namespace gltfpp
 
 namespace std {
 	template <>

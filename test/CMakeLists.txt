@@ -10,9 +10,12 @@ target_link_libraries(gltfpp_test PRIVATE Catch gltfpp)
 add_executable(simple_consumer
 	simple_consumer.cpp
 )
-target_compile_options(simple_consumer PRIVATE -fno-exceptions)
+#target_compile_options(simple_consumer PRIVATE -fno-exceptions)
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-	target_compile_options(simple_consumer PRIVATE -fmodules-decluse
+	target_compile_options(simple_consumer PRIVATE
 	-Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-non-modular-include-in-module)
+	if(GLTFPP_ENABLE_MODULES)
+		target_compile_options(simple_consumer PRIVATE -fmodules-decluse)
+	endif()
 endif()
 target_link_libraries(simple_consumer PRIVATE gltfpp)

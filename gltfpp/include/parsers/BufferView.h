@@ -7,7 +7,7 @@
 namespace gltfpp {
 	inline namespace v1 {
 		inline auto parse(BufferView &view) {
-			return [&](ParseContext &ctx) -> gltf_result<ParseContext> {
+			return [&](ParseContext ctx) -> gltf_result<ParseContext> {
 				std::size_t bufferIdx{};
 				std::ptrdiff_t offset{};
 				std::ptrdiff_t length{};
@@ -30,9 +30,8 @@ namespace gltfpp {
 
 				auto &buffer = ctx.root->buffers.value()[bufferIdx];
 
-				if( length < 0 ||
-					static_cast<std::size_t>(offset) > buffer.get().size() ||
-					static_cast<std::size_t>(offset + length) > buffer.get().size()) {
+				if(length < 0 || static_cast<std::size_t>(offset) > buffer.get().size() ||
+				   static_cast<std::size_t>(offset + length) > buffer.get().size()) {
 					return make_unexpected(gltf_error::index_out_of_range);
 				}
 
