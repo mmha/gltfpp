@@ -9,8 +9,13 @@ namespace gltfpp {
 			return [&](const ParseContext &ctx) -> gltf_result<ParseContext> {
 				std::size_t byteLength{};
 
-				auto result = field(b.uri, "uri")(ctx) >> field(b.name, "name") >> field(byteLength, "byteLength") >>
-							  field(b.extras, "extras") >> field(b.extensions, "extensions");
+				// clang-format off
+				auto result =
+				   field(b.uri, "uri")(ctx)
+				>> field(b.name, "name")
+				>> field(byteLength, "byteLength")
+				>> field(b.extras, "extras") >> field(b.extensions, "extensions");
+				// clang-format on
 
 				if(result) {
 					b.data.resize(byteLength);
