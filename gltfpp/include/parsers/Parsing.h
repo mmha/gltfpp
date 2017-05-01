@@ -15,11 +15,14 @@ namespace gltfpp {
 			const nlohmann::json *json = nullptr;
 		};
 
-		template <typename T>
-		auto parse(T &s);
+		template <typename T, typename std::enable_if_t<detail::is_field_aggregate<T>>* = nullptr>
+		auto parse(T &target);
 
-		template <typename T>
-		auto parse(std::vector<T> &s);
+		template <typename T, typename std::enable_if_t<detail::is_fundamental_json_type<T>>* = nullptr>
+		auto parse(T &target);
+
+		template <typename T, typename std::enable_if_t<detail::is_field_list<T>>* = nullptr>
+		auto parse(T &target);
 
 		template <typename T>
 		auto field(option<T> &target, const char *key) {
@@ -80,32 +83,25 @@ namespace gltfpp {
 			};
 		}
 
-		namespace detail {
-			template <typename T>
-			auto parseImpl(std::false_type, T &target) {
-				return aggregate(target);
-			}
-
-			template <typename T>
-			auto parseImpl(std::true_type, T &s) {
-				return [&](ParseContext ctx) -> gltf_result<ParseContext> {
-					// TODO this is not a complete check
-					if(ctx.json) {
-						s = ctx.json->template get<T>();
-						return ctx;
-					}
-					return make_unexpected(gltf_error::key_not_found);
-				};
-			}
-		}	// namespace detail
-
-		template <typename T>
-		auto parse(T &s) {
-			return detail::parseImpl(is_fundamental_json_type<T>{}, s);
+		template <typename T, typename std::enable_if_t<detail::is_field_aggregate<T>>*>
+		auto parse(T &target) {
+			return aggregate(target);
 		}
 
-		template <typename T>
-		auto parse(std::vector<T> &s) {
+		template <typename T, typename std::enable_if_t<detail::is_fundamental_json_type<T>>*>
+		auto parse(T &target) {
+			return [&](ParseContext ctx) -> gltf_result<ParseContext> {
+				// TODO this is not a complete check
+				if(ctx.json) {
+					target = ctx.json->template get<T>();
+					return ctx;
+				}
+				return make_unexpected(gltf_error::key_not_found);
+			};
+		}
+
+		template <typename T, typename std::enable_if_t<detail::is_field_list<T>>*>
+		auto parse(T &target) {
 			return [&](ParseContext ctx) -> gltf_result<ParseContext> {
 				if(!ctx.json) {
 					return make_unexpected(gltf_error::key_not_found);
@@ -114,11 +110,11 @@ namespace gltfpp {
 					return make_unexpected(gltf_error::type_error);
 				}
 
-				s.resize(ctx.json->size());
+				target.resize(ctx.json->size());
 
 				auto in = ctx.json;
-				auto out = s.begin();
-				for(; out != s.end(); ++in, ++out) {
+				auto out = target.begin();
+				for(; out != target.end(); ++in, ++out) {
 					auto res = parse(*out)({ctx.root, in});
 					static_assert(std::is_same<gltf_result<ParseContext>, decltype(res)>{},
 								  "Return type of the parser function must be gltf_result<ParseContext>");
