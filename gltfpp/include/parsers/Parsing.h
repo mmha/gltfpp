@@ -1,6 +1,7 @@
 #pragma once
 #include "../Error.h"
 #include "../Meta.h"
+#include "../detail/Byte.h"
 #include <algorithm>
 #include <boost/archive/iterators/binary_from_base64.hpp>
 #include <boost/archive/iterators/transform_width.hpp>
