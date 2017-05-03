@@ -2,10 +2,10 @@
 #include "../Error.h"
 #include "../Meta.h"
 #include <algorithm>
-#include <boost/hana.hpp>
-#include <boost/hana/define_struct.hpp>
 #include <boost/archive/iterators/binary_from_base64.hpp>
 #include <boost/archive/iterators/transform_width.hpp>
+#include <boost/hana.hpp>
+#include <boost/hana/define_struct.hpp>
 #include <functional>
 #include <json.hpp>
 
@@ -18,13 +18,13 @@ namespace gltfpp {
 			const nlohmann::json *json = nullptr;
 		};
 
-		template <typename T, typename std::enable_if_t<detail::is_field_aggregate<T>>* = nullptr>
+		template <typename T, typename std::enable_if_t<detail::is_field_aggregate<T>> * = nullptr>
 		auto parse(T &target);
 
-		template <typename T, typename std::enable_if_t<detail::is_fundamental_json_type<T>>* = nullptr>
+		template <typename T, typename std::enable_if_t<detail::is_fundamental_json_type<T>> * = nullptr>
 		auto parse(T &target);
 
-		template <typename T, typename std::enable_if_t<detail::is_field_list<T>>* = nullptr>
+		template <typename T, typename std::enable_if_t<detail::is_field_list<T>> * = nullptr>
 		auto parse(T &target);
 
 		template <typename T>
@@ -86,12 +86,12 @@ namespace gltfpp {
 			};
 		}
 
-		template <typename T, typename std::enable_if_t<detail::is_field_aggregate<T>>*>
+		template <typename T, typename std::enable_if_t<detail::is_field_aggregate<T>> *>
 		auto parse(T &target) {
 			return aggregate(target);
 		}
 
-		template <typename T, typename std::enable_if_t<detail::is_fundamental_json_type<T>>*>
+		template <typename T, typename std::enable_if_t<detail::is_fundamental_json_type<T>> *>
 		auto parse(T &target) {
 			return [&](ParseContext ctx) -> gltf_result<ParseContext> {
 				// TODO this is not a complete check
@@ -103,7 +103,7 @@ namespace gltfpp {
 			};
 		}
 
-		template <typename T, typename std::enable_if_t<detail::is_field_list<T>>*>
+		template <typename T, typename std::enable_if_t<detail::is_field_list<T>> *>
 		auto parse(T &target) {
 			return [&](ParseContext ctx) -> gltf_result<ParseContext> {
 				if(!ctx.json) {
@@ -129,7 +129,7 @@ namespace gltfpp {
 			};
 		}
 
-		template<typename String>
+		template <typename String>
 		auto is_data_uri(String &&uri) {
 			using std::begin;
 			using std::end;
@@ -150,13 +150,12 @@ namespace gltfpp {
 			}
 			return Result{++result};
 		}
-		
-		template<typename CharInputIterator, typename ByteOutputIterator>
+
+		template <typename CharInputIterator, typename ByteOutputIterator>
 		auto decode_embedded_base64(CharInputIterator first, CharInputIterator last, ByteOutputIterator out) {
-			using b64 = boost::archive::iterators::transform_width<boost::archive::iterators::binary_from_base64<std::string::const_iterator>, 8, 6>;
-			return std::transform(b64(first), b64(last), out, [](char c) {
-				return static_cast<byte>(c);
-			});
+			using b64 = boost::archive::iterators::transform_width<
+				boost::archive::iterators::binary_from_base64<std::string::const_iterator>, 8, 6>;
+			return std::transform(b64(first), b64(last), out, [](char c) { return static_cast<byte>(c); });
 		}
 	}	// namespace v1
 }	// namespace gltfpp

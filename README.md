@@ -38,7 +38,7 @@ Finished tasks
 TODO
 ----
 - generalized (and type safe) enum parsing
-- deserialization of buffer data (embedded base64, GLB)
+- deserialization of external buffer data (GLB)
 - Networking (HTTP on desktop, XHR on WebAssembly), asynchronous loading
 - Proper documentation
 - out of tree extensions?

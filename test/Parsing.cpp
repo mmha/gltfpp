@@ -1,5 +1,5 @@
-#include "glTF.h"
 #include "parsers/Parsing.h"
+#include "glTF.h"
 #include <catch.hpp>
 #include <json.hpp>
 

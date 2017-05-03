@@ -25,13 +25,11 @@ namespace gltfpp {
 					auto maybe_base64 = is_data_uri(uri);
 					if(maybe_base64) {
 						decode_embedded_base64(*maybe_base64, uri.end(), std::back_inserter(b.data));
-					}
-					else {
+					} else {
 						// TODO load external resource if valid uri
 						return make_unexpected(gltf_error::unimplemented);
 					}
-				}
-				else {
+				} else {
 					b.data.resize(byteLength);
 				}
 
