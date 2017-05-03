@@ -27,12 +27,12 @@ Install emscripten, then invoke CMake via emconfigure:
 ```
 emconfigure cmake .. [-GNinja] [-DGLTFPP_WEBASSEMBLY=1] # Default is wasm instead of asm.js
 ```
-Compiling to WebAssembly requires binaryen. Note that this library does not export anything yet, so you can't use it in the browser yet.
+Compiling to WebAssembly requires binaryen. Note that this library does not export anything, so you can't use it in the browser yet.
 
 Finished tasks
 ------
 - Parsing infrastructure (trivial properties can be parsed simply by declaring their fields)
-- Finished properties: `Asset`
+- Finished properties: `Asset`, `Buffer` (only data uris)
 - Build system support for Emscripten
 
 TODO

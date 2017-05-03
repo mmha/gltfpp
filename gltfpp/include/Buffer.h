@@ -3,13 +3,11 @@
 #include "detail/Byte.h"
 #include <json.hpp>
 #include <vector>
+#include <boost/hana/define_struct.hpp>
 
 namespace gltfpp {
 	inline namespace v1 {
-		class Buffer {
-			public:
-			Buffer() = default;
-
+		struct Buffer {
 			std::vector<byte> &operator*();
 			const std::vector<byte> &operator*() const;
 			std::vector<byte> *operator->();
@@ -17,10 +15,12 @@ namespace gltfpp {
 			std::vector<byte> &get();
 			const std::vector<byte> &get() const;
 
-			option<std::string> uri;
-			option<std::string> name;
-			option<nlohmann::json> extensions;
-			option<nlohmann::json> extras;
+			BOOST_HANA_DEFINE_STRUCT(Buffer,
+				(option<std::string>, uri),
+				(option<std::string>, name),
+				(option<nlohmann::json>, extensions),
+				(option<nlohmann::json>, extras)
+			);
 			std::vector<byte> data;
 		};
 
