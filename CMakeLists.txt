@@ -5,7 +5,7 @@ set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 include(GenerateClangTidyTarget)
 include(ExternalProject)
 
-option(GLTFPP_ENABLE_MODULES "Enable clang modules to increase compilation speed - only tested with clang 4.0!" OFF)
+option(GLTFPP_ENABLE_MODULES "Enable clang modules to increase compilation speed - only tested with clang 5.0!" OFF)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -18,6 +18,9 @@ if(GLTFPP_ENABLE_MODULES AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" AND NOT
 endif()
 if(EMSCRIPTEN)
 	option(GLTFPP_WEBASSEMBLY "Generate WebAssembly instead of asm.js" ON)
+	if(GLTFPP_WEBASSEMBLY)
+		set(CMAKE_CXX_FLAGS "-s WASM=1 --bind")
+	endif()
 endif()
 
 find_package(Sphinx)

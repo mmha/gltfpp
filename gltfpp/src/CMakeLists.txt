@@ -1,4 +1,7 @@
-find_package(Boost 1.59 REQUIRED)
+find_package(Boost 1.61)
+if(Boost_FOUND)
+	set(BOOST_NONCOMPILED_DIR ${Boost_INCLUDE_DIR})
+endif()
 
 add_library(gltfpp
 	Buffer.cpp
@@ -6,7 +9,7 @@ add_library(gltfpp
 )
 
 target_link_libraries(gltfpp PUBLIC nlohmann_json microsoft_gsl boost_outcome)
-target_include_directories(gltfpp SYSTEM PUBLIC ${Boost_INCLUDE_DIR})
+target_include_directories(gltfpp SYSTEM PUBLIC ${BOOST_NONCOMPILED_DIR})
 target_include_directories(gltfpp PUBLIC "../include")
 #target_compile_options(gltfpp PRIVATE -fno-exceptions)
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
@@ -18,11 +21,7 @@ endif()
 add_clang_tidy_check(gltfpp)
 
 if(EMSCRIPTEN)
-	if(GLTFPP_WEBASSEMBLY)
-		target_include_directories(gltfpp PUBLIC "../include/detail/emscripten")
-		target_compile_options(gltfpp PRIVATE -s WASM=1)
-	endif()
-	target_compile_options(gltfpp PRIVATE --bind)
+	target_include_directories(gltfpp PUBLIC "../include/detail/emscripten")
 endif()
 
 install(TARGETS gltfpp
