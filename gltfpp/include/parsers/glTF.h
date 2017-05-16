@@ -16,5 +16,5 @@ namespace gltfpp {
 			}
 			return {};
 		}
-	}
-}
+	}	// namespace v1
+}	// namespace gltfpp

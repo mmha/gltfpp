@@ -42,7 +42,8 @@ namespace gltfpp {
 				// Find the mime type or the begin of the data (marked with a ',')
 				{
 					result.mime_begin = prefixMatch.second;
-					result.mime_end = std::find_if(result.mime_begin, uri_end, [](auto c) { return c == ',' || c == ';'; });
+					result.mime_end =
+						std::find_if(result.mime_begin, uri_end, [](auto c) { return c == ',' || c == ';'; });
 					if(result.mime_end == uri_end) {
 						return {};
 					}
@@ -59,7 +60,7 @@ namespace gltfpp {
 				result.data_end = uri_end;
 				return result;
 			}
-		}
+		}	// namespace detail
 
 		inline auto parse(URI &uri) {
 			using namespace detail;
