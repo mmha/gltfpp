@@ -1,5 +1,0 @@
-explicit module glTF.Private {
-	//header "Utils.h"
-	//header "Iterator.h"
-	export *
-}

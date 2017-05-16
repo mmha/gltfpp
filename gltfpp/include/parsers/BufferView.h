@@ -30,13 +30,13 @@ namespace gltfpp {
 
 				auto &buffer = ctx.root->buffers.value()[bufferIdx];
 
-				if(length < 0 || static_cast<std::size_t>(offset) > buffer.get().size() ||
-				   static_cast<std::size_t>(offset + length) > buffer.get().size()) {
+				if(length < 0 || static_cast<std::size_t>(offset) > buffer.uri->size() ||
+				   static_cast<std::size_t>(offset + length) > buffer.uri->size()) {
 					return make_unexpected(gltf_error::index_out_of_range);
 				}
 
 				view.buffer = std::addressof(buffer);
-				view.span = {buffer.get().data() + offset, length};
+				view.span = {buffer.uri->data() + offset, length};
 
 				return ctx;
 			};

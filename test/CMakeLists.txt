@@ -2,7 +2,7 @@ add_executable(gltfpp_test
 	Asset.cpp
 	Buffer.cpp
 	glTF.cpp
-	Parsing.cpp
+	URI.cpp
 	testmain.cpp
 )
 

@@ -19,10 +19,10 @@ TEST_CASE("Buffer_Minimal", "[Buffer]") {
 	REQUIRE(success);
 
 	REQUIRE(!buffer.name);
-	REQUIRE(!buffer.uri);
+	REQUIRE(buffer.uri);
 	REQUIRE(buffer.extras.empty());
 	REQUIRE(buffer.extensions.empty());
-	REQUIRE(buffer->size() == 50);
+	REQUIRE(buffer.uri->size() == 50);
 }
 
 TEST_CASE("Buffer_Complete", "[Buffer]") {
@@ -46,13 +46,12 @@ TEST_CASE("Buffer_Complete", "[Buffer]") {
 
 	REQUIRE(buffer.name);
 	REQUIRE(buffer.name.get() == "Utah Teapot");
-	REQUIRE(buffer.uri);	// TODO Test external resource loading here once implemented
-	REQUIRE(buffer.uri.get() == "data:text/plain;base64,UGFyc2V5IE1jUGFyc2VmYWNl");
+	REQUIRE(buffer.uri);
 	REQUIRE(buffer.extras.get() == extra);
 	REQUIRE(buffer.extensions.get() == extension);
-	REQUIRE(buffer->size() == 18);
+	REQUIRE(buffer.uri->size() == 18);
 
-	auto str = reinterpret_cast<const char *>(buffer->data());
+	auto str = reinterpret_cast<const char *>(buffer.uri->data());
 	constexpr char expected[] = "Parsey McParseface";
 	const auto matched =
 		std::mismatch(std::begin(expected), std::end(expected) - 1, str).first == std::end(expected) - 1;
@@ -111,8 +110,8 @@ TEST_CASE("Buffer_WithData", "[Buffer]") {
 		FAIL("Parsing failed - Error: " << success.error().message());
 	}
 
-	REQUIRE(buffer->size() == strlen(expected) + 2);	// TODO Should the padding be removed?
-	const auto decoded_correctly = std::equal(buffer->begin(), buffer->end() - 2, expected,
+	REQUIRE(buffer.uri->size() == strlen(expected) + 2);	// TODO Should the padding be removed?
+	const auto decoded_correctly = std::equal(buffer.uri->begin(), buffer.uri->end() - 2, expected,
 											  [](byte buf, char str) { return to_integer<char>(buf) == str; });
 	REQUIRE(decoded_correctly);
 }

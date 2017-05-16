@@ -5,7 +5,7 @@
 namespace gltfpp {
 	inline namespace v1 {
 		struct gltf_error : std::error_code {
-			enum cases { key_not_found, index_out_of_range, type_error, unimplemented };
+			enum cases { key_not_found, index_out_of_range, type_error, unimplemented, decode_error };
 
 			gltf_error() = default;
 			inline gltf_error(cases error);
@@ -36,6 +36,8 @@ namespace gltfpp {
 							return "Unexpected data type";
 						case gltf_error::unimplemented:
 							return "glTF Feature is unimplemented";
+						case gltf_error::decode_error:
+							return "Unexpected input when decoding";
 						default:
 							return "Unknown Error";
 					}
@@ -51,6 +53,8 @@ namespace gltfpp {
 							return std::errc::argument_out_of_domain;
 						case gltf_error::unimplemented:
 							return std::errc::function_not_supported;
+						case gltf_error::decode_error:
+							return std::errc::bad_message;	// TODO
 						default:
 							return std::error_condition(error, *this);
 					}

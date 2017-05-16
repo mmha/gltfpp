@@ -2,6 +2,7 @@
 #include "../Buffer.h"
 #include "../Error.h"
 #include "Parsing.h"
+#include "URI.h"
 
 namespace gltfpp {
 	inline namespace v1 {
@@ -19,18 +20,9 @@ namespace gltfpp {
 					return result;
 				}
 
-				if(b.uri) {
-					auto &uri = b.uri.get();
-					b.data.reserve(byteLength);
-					auto maybe_base64 = is_data_uri(uri);
-					if(maybe_base64) {
-						decode_embedded_base64(*maybe_base64, uri.end(), std::back_inserter(b.data));
-					} else {
-						// TODO load external resource if valid uri
-						return make_unexpected(gltf_error::unimplemented);
-					}
-				} else {
-					b.data.resize(byteLength);
+				if(!b.uri) {
+					b.uri.emplace();
+					b.uri->resize(byteLength);
 				}
 
 				return ctx;

@@ -130,28 +130,6 @@ namespace gltfpp {
 			};
 		}
 
-		template <typename String>
-		auto is_data_uri(String &&uri) {
-			using std::begin;
-			using std::end;
-			const auto uri_begin = begin(std::forward<String>(uri));
-			const auto uri_end = end(std::forward<String>(uri));
-			using Result = option<const decltype(uri_begin)>;
-
-			constexpr char expected_prefix[] = "data:";
-			const auto prefixMatch = std::mismatch(begin(expected_prefix), end(expected_prefix), uri_begin);
-			if(prefixMatch.first == end(expected_prefix)) {
-				return Result{};
-			}
-
-			// It probably is a data uri, look for ',' in the entire uri
-			auto result = std::find(prefixMatch.second, uri_end, ',');
-			if(result == uri_end) {
-				return Result{};
-			}
-			return Result{++result};
-		}
-
 		template <typename CharInputIterator, typename ByteOutputIterator>
 		auto decode_embedded_base64(CharInputIterator first, CharInputIterator last, ByteOutputIterator out) {
 			using b64 = boost::archive::iterators::transform_width<

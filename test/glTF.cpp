@@ -1,4 +1,4 @@
-#include "glTF.h"
+#include "gltfpp.h"
 #include <catch.hpp>
 
 using namespace gltfpp;

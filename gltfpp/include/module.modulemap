@@ -19,10 +19,10 @@ module thirdparty [system] {
 
 module glTF {
   module parsers {
-	umbrella header "parsers/all.h"
+	umbrella header "parsers/glTF.h"
   }
 
   use thirdparty
-  umbrella header "glTF.h"
+  umbrella header "gltfpp.h"
   export *
 }

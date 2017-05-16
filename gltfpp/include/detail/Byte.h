@@ -1,6 +1,11 @@
 #pragma once
 #include <type_traits>
 
+/**
+ * @file Backport of C++17'S std::byte
+ * @see
+ */
+
 namespace gltfpp {
 	inline namespace v1 {
 		enum class byte : unsigned char {};
