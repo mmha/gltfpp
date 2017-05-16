@@ -1,7 +1,7 @@
 #pragma once
 #include <boost/hana/define_struct.hpp>
 #include <boost/variant.hpp>
-#include <nlohmann/json.hpp>
+#include <json.hpp>
 #include <vector>
 
 namespace gltfpp {
