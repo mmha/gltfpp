@@ -6,7 +6,7 @@
 namespace gltfpp {
 	inline namespace v1 {
 		struct Skin {
-			//BOOST_HANA_DEFINE_STRUCT(Skin, (std::vector<Accessor>, accessors));
+			// BOOST_HANA_DEFINE_STRUCT(Skin, (std::vector<Accessor>, accessors));
 		};
 	}	// namespace v1
 }	// namespace gltfpp

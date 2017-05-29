@@ -1,14 +1,13 @@
 #pragma once
 #include "Buffer.h"
+#include "Enum.h"
 #include "Error.h"
 #include <boost/hana/define_struct.hpp>
 #include <gsl/span>
 #include <json.hpp>
-#include "Enum.h"
 
 namespace gltfpp {
 	inline namespace v1 {
-
 		BETTER_ENUM(BufferViewTarget, int32_t, ARRAY_BUFFER = 34962, ELEMENT_ARRAY_BUFFER = 34963)
 
 		struct BufferView {

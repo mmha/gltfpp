@@ -19,24 +19,25 @@ namespace gltfpp {
 			const nlohmann::json *json = nullptr;
 		};
 
-		template<typename T>
+		template <typename T>
 		struct defaulted {
-			template<typename... Args>
+			template <typename... Args>
 			defaulted(Args &&... args)
-			: val{std::forward<Args>(args)...} {}
-			
+				: val{std::forward<Args>(args)...} {
+			}
+
 			operator T &() {
 				return val;
 			}
-			
+
 			operator const T &() const {
 				return val;
 			}
-			
+
 			T &get() {
 				return val;
 			}
-			
+
 			const T &get() const {
 				return val;
 			}
@@ -53,8 +54,8 @@ namespace gltfpp {
 
 		template <typename T, typename std::enable_if_t<detail::is_field_list<T>> * = nullptr>
 		auto parse(T &target);
-		
-		template<typename T, typename std::enable_if_t<detail::is_enumeration<T>> * = nullptr>
+
+		template <typename T, typename std::enable_if_t<detail::is_enumeration<T>> * = nullptr>
 		auto parse(T &target);
 
 		template <typename T>
@@ -102,13 +103,13 @@ namespace gltfpp {
 				auto refs = transform(members, [&](auto acc) { return std::ref(acc(target)); });
 
 				auto res = fold(zip(names, refs), gltf_result<ParseContext>{ctx}, [&](auto c, auto entry) {
-						if(!c) {
-							return c;	// I hope the optimizer understands that...
-						}
-						auto name = to<const char *>(entry[size_c<0>]);
-						auto &member = entry[size_c<1>].get();
-						return c >> field(member, name);
-					});
+					if(!c) {
+						return c;	// I hope the optimizer understands that...
+					}
+					auto name = to<const char *>(entry[size_c<0>]);
+					auto &member = entry[size_c<1>].get();
+					return c >> field(member, name);
+				});
 				if(!res) {
 					return res;
 				}
@@ -158,8 +159,8 @@ namespace gltfpp {
 				return ctx;
 			};
 		}
-		
-		template<typename T, typename std::enable_if_t<detail::is_enumeration<T>> *>
+
+		template <typename T, typename std::enable_if_t<detail::is_enumeration<T>> *>
 		auto parse(T &target) {
 			return [&target](ParseContext ctx) -> gltf_result<ParseContext> {
 				if(!ctx.json) {
