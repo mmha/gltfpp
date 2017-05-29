@@ -35,4 +35,26 @@ TEST_CASE("glTF_Buffer", "[glTF]") {
 }
 
 TEST_CASE("glTF_BufferView", "[glTF]") {
+	glTF target;
+	auto source = minimalglTF;
+	json minimalBuffer{"byteLength", 42};
+	source["buffer"] = {minimalBuffer, minimalBuffer, minimalBuffer};
+	
+	json minimalBufferView{
+		{"buffer", 0},
+		{"byteOffset", 0},
+		{"byteLength", 1},
+		{"byteStride", 0},
+		{"target", "ARRAY_BUFFER"}
+	};
+	
+	source["bufferViews"] = {minimalBufferView, minimalBufferView};
+	
+	const auto success = from_json(source, target);
+	REQUIRE(success);
+	REQUIRE(target.bufferViews);
+	REQUIRE(target.bufferViews->size() == 2);
+	REQUIRE(target.bufferViews.get()[0].target);
+	const bool asdf = target.bufferViews.get()[0].target.get() == +BufferViewTarget::ARRAY_BUFFER;
+	//REQUIRE(asdf);
 }

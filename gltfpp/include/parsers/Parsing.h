@@ -19,6 +19,32 @@ namespace gltfpp {
 			const nlohmann::json *json = nullptr;
 		};
 
+		template<typename T>
+		struct defaulted {
+			template<typename... Args>
+			defaulted(Args &&... args)
+			: val{std::forward<Args>(args)...} {}
+			
+			operator T &() {
+				return val;
+			}
+			
+			operator const T &() const {
+				return val;
+			}
+			
+			T &get() {
+				return val;
+			}
+			
+			const T &get() const {
+				return val;
+			}
+
+			private:
+			T val;
+		};
+
 		template <typename T, typename std::enable_if_t<detail::is_field_aggregate<T>> * = nullptr>
 		auto parse(T &target);
 
@@ -27,10 +53,13 @@ namespace gltfpp {
 
 		template <typename T, typename std::enable_if_t<detail::is_field_list<T>> * = nullptr>
 		auto parse(T &target);
+		
+		template<typename T, typename std::enable_if_t<detail::is_enumeration<T>> * = nullptr>
+		auto parse(T &target);
 
 		template <typename T>
 		auto field(option<T> &target, const char *key) {
-			return [&, key](ParseContext ctx) -> gltf_result<ParseContext> {
+			return [&target, key](ParseContext ctx) -> gltf_result<ParseContext> {
 				auto valIt = ctx.json->find(key);
 				if(valIt != ctx.json->end()) {
 					target.set_value();
@@ -47,7 +76,7 @@ namespace gltfpp {
 
 		template <typename T>
 		auto field(T &target, const char *key) {
-			return [&, key](ParseContext ctx) -> gltf_result<ParseContext> {
+			return [&target, key](ParseContext ctx) -> gltf_result<ParseContext> {
 				auto valIt = ctx.json->find(key);
 				if(valIt != ctx.json->end()) {
 					auto newCtx = ParseContext{ctx.root, std::addressof(*valIt)};
@@ -65,19 +94,19 @@ namespace gltfpp {
 
 		template <typename T>
 		auto aggregate(T &target) {
-			return [&](ParseContext ctx) -> gltf_result<ParseContext> {
-				constexpr auto accessor = boost::hana::accessors<T>();
-				auto names = boost::hana::transform(accessor, boost::hana::first);
-				auto members = boost::hana::transform(accessor, boost::hana::second);
-				auto refs = boost::hana::transform(members, [&](auto acc) { return std::ref(acc(target)); });
+			return [&target](ParseContext ctx) -> gltf_result<ParseContext> {
+				using namespace boost::hana;
+				constexpr auto accessor = accessors<T>();
+				auto names = transform(accessor, first);
+				auto members = transform(accessor, second);
+				auto refs = transform(members, [&](auto acc) { return std::ref(acc(target)); });
 
-				auto res = boost::hana::fold(
-					boost::hana::zip(names, refs), gltf_result<ParseContext>{ctx}, [&](auto c, auto entry) {
+				auto res = fold(zip(names, refs), gltf_result<ParseContext>{ctx}, [&](auto c, auto entry) {
 						if(!c) {
 							return c;	// I hope the optimizer understands that...
 						}
-						auto name = boost::hana::to<const char *>(entry[boost::hana::size_c<0>]);
-						auto &member = entry[boost::hana::size_c<1>].get();
+						auto name = to<const char *>(entry[size_c<0>]);
+						auto &member = entry[size_c<1>].get();
 						return c >> field(member, name);
 					});
 				if(!res) {
@@ -94,7 +123,7 @@ namespace gltfpp {
 
 		template <typename T, typename std::enable_if_t<detail::is_fundamental_json_type<T>> *>
 		auto parse(T &target) {
-			return [&](ParseContext ctx) -> gltf_result<ParseContext> {
+			return [&target](ParseContext ctx) -> gltf_result<ParseContext> {
 				// TODO this is not a complete check
 				if(ctx.json) {
 					target = ctx.json->template get<T>();
@@ -106,7 +135,7 @@ namespace gltfpp {
 
 		template <typename T, typename std::enable_if_t<detail::is_field_list<T>> *>
 		auto parse(T &target) {
-			return [&](ParseContext ctx) -> gltf_result<ParseContext> {
+			return [&target](ParseContext ctx) -> gltf_result<ParseContext> {
 				if(!ctx.json) {
 					return make_unexpected(gltf_error::key_not_found);
 				}
@@ -116,16 +145,32 @@ namespace gltfpp {
 
 				target.resize(ctx.json->size());
 
-				auto in = ctx.json;
+				auto in = ctx.json->begin();
 				auto out = target.begin();
 				for(; out != target.end(); ++in, ++out) {
-					auto res = parse(*out)({ctx.root, in});
+					auto res = parse(*out)({ctx.root, &*in});
 					static_assert(std::is_same<gltf_result<ParseContext>, decltype(res)>{},
 								  "Return type of the parser function must be gltf_result<ParseContext>");
 					if(!res) {
 						return res;
 					}
 				}
+				return ctx;
+			};
+		}
+		
+		template<typename T, typename std::enable_if_t<detail::is_enumeration<T>> *>
+		auto parse(T &target) {
+			return [&target](ParseContext ctx) -> gltf_result<ParseContext> {
+				if(!ctx.json) {
+					return make_unexpected(gltf_error::key_not_found);
+				}
+				const auto str = ctx.json->get<std::string>();
+				const auto parsed = T::_from_string_nothrow(str.c_str());
+				if(!parsed) {
+					return make_unexpected(gltf_error::decode_error);
+				}
+				target = *parsed;
 				return ctx;
 			};
 		}

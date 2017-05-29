@@ -4,7 +4,7 @@ if(Boost_FOUND)
 endif()
 
 add_library(gltfpp INTERFACE)
-target_link_libraries(gltfpp INTERFACE nlohmann_json microsoft_gsl boost_outcome)
+target_link_libraries(gltfpp INTERFACE nlohmann_json microsoft_gsl boost_outcome better_enums)
 target_include_directories(gltfpp SYSTEM INTERFACE ${BOOST_NONCOMPILED_DIR})
 target_include_directories(gltfpp INTERFACE "include")
 

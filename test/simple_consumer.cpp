@@ -1,5 +1,5 @@
 #include <cstdio>
-#include <glTF.h>
+#include <gltfpp.h>
 
 int main(int argc, char **argv) {
 	gltfpp::glTF g;

@@ -10,3 +10,6 @@
 [submodule "3rdparty/Catch"]
 	path = 3rdparty/Catch
 	url = https://github.com/philsquared/Catch.git
+[submodule "3rdparty/better-enums"]
+	path = 3rdparty/better-enums
+	url = https://github.com/aantron/better-enums.git
