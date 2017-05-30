@@ -4,6 +4,10 @@
 
 namespace gltfpp {
 	inline namespace v1 {
+		/*
+		 * Detection Idiom
+		 */
+
 		template <typename...>
 		using void_t = void;
 
@@ -31,6 +35,53 @@ namespace gltfpp {
 
 		template <typename Default, template <typename...> class Op, typename... Args>
 		using detected_or = detail::detector<Default, void, Op, Args...>;
+
+		/*******************************************************************************************************/
+
+		/**
+		 * is_nothrow_swappable from mpark/variant
+		 */
+		namespace detail {
+			namespace swappable {
+				using std::swap;
+
+				template <typename T>
+				struct is_swappable_impl {
+				private:
+					template <typename U,
+					typename = decltype(swap(std::declval<U &>(),
+											 std::declval<U &>()))>
+											 inline static std::true_type test(int);
+
+											 template <typename U>
+											 inline static std::false_type test(...);
+
+				public:
+					using type = decltype(test<T>(0));
+				};
+
+				template <typename T>
+				using is_swappable = typename is_swappable_impl<T>::type;
+
+				template <typename T, bool = is_swappable<T>::value>
+				struct is_nothrow_swappable {
+					static constexpr bool value =
+					noexcept(swap(std::declval<T &>(), std::declval<T &>()));
+				};
+
+				template <typename T>
+				struct is_nothrow_swappable<T, false> : std::false_type {};
+
+			}  // namespace swappable
+		}  // namespace detail
+
+		template <typename T>
+		using is_swappable = detail::swappable::is_swappable<T>;
+
+		template <typename T>
+		using is_nothrow_swappable = detail::swappable::is_nothrow_swappable<T>;
+
+		/*******************************************************************************************************/
 
 		template <typename...>
 		struct disjunction : std::false_type {};

@@ -2,6 +2,7 @@
 #include "../Error.h"
 #include "../Meta.h"
 #include "../detail/Byte.h"
+#include "detail/Defaulted.h"
 #include <algorithm>
 #include <boost/archive/iterators/binary_from_base64.hpp>
 #include <boost/archive/iterators/transform_width.hpp>
@@ -17,33 +18,6 @@ namespace gltfpp {
 		struct ParseContext {
 			glTF *root = nullptr;
 			const nlohmann::json *json = nullptr;
-		};
-
-		template <typename T>
-		struct defaulted {
-			template <typename... Args>
-			defaulted(Args &&... args)
-				: val{std::forward<Args>(args)...} {
-			}
-
-			operator T &() {
-				return val;
-			}
-
-			operator const T &() const {
-				return val;
-			}
-
-			T &get() {
-				return val;
-			}
-
-			const T &get() const {
-				return val;
-			}
-
-			private:
-			T val;
 		};
 
 		template <typename T, typename std::enable_if_t<detail::is_field_aggregate<T>> * = nullptr>
@@ -90,6 +64,21 @@ namespace gltfpp {
 					return ctx;
 				}
 				return make_unexpected(gltf_error::key_not_found);
+			};
+		}
+
+		template<typename T>
+		auto field(defaulted<T> &target, const char *key) {
+			return [&target, key](ParseContext ctx) -> gltf_result<ParseContext> {
+				auto valIt = ctx.json->find(key);
+				if(valIt != ctx.json->end()) {
+					auto newCtx = ParseContext{ctx.root, std::addressof(*valIt)};
+					auto res = parse(target.value())(newCtx);
+					static_assert(std::is_same<gltf_result<ParseContext>, decltype(res)>{},
+								  "Return type of the parser function must be gltf_result<ParseContext>");
+				}
+				// defaulted<T> is forced to be initialized already, just exit if the default is not overwritten
+				return ctx;
 			};
 		}
 

@@ -41,7 +41,7 @@ TEST_CASE("glTF_BufferView", "[glTF]") {
 	source["buffer"] = {minimalBuffer, minimalBuffer, minimalBuffer};
 
 	json minimalBufferView{
-		{"buffer", 0}, {"byteOffset", 0}, {"byteLength", 1}, {"byteStride", 0}, {"target", "ARRAY_BUFFER"}};
+		{"buffer", 0}, {"byteOffset", 0}, {"byteLength", 1}, {"target", "ARRAY_BUFFER"}};
 
 	source["bufferViews"] = {minimalBufferView, minimalBufferView};
 
@@ -50,6 +50,6 @@ TEST_CASE("glTF_BufferView", "[glTF]") {
 	REQUIRE(target.bufferViews);
 	REQUIRE(target.bufferViews->size() == 2);
 	REQUIRE(target.bufferViews.get()[0].target);
-	const bool asdf = target.bufferViews.get()[0].target.get() == +BufferViewTarget::ARRAY_BUFFER;
-	// REQUIRE(asdf);
+	const bool enum_is_array_buffer = target.bufferViews.get()[0].target.get() == +BufferViewTarget::ARRAY_BUFFER;
+	REQUIRE(enum_is_array_buffer);
 }
