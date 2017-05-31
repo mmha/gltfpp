@@ -67,7 +67,7 @@ namespace gltfpp {
 			};
 		}
 
-		template<typename T>
+		template <typename T>
 		auto field(defaulted<T> &target, const char *key) {
 			return [&target, key](ParseContext ctx) -> gltf_result<ParseContext> {
 				auto valIt = ctx.json->find(key);

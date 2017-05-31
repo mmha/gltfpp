@@ -47,16 +47,14 @@ namespace gltfpp {
 
 				template <typename T>
 				struct is_swappable_impl {
-				private:
-					template <typename U,
-					typename = decltype(swap(std::declval<U &>(),
-											 std::declval<U &>()))>
-											 inline static std::true_type test(int);
+					private:
+					template <typename U, typename = decltype(swap(std::declval<U &>(), std::declval<U &>()))>
+					inline static std::true_type test(int);
 
-											 template <typename U>
-											 inline static std::false_type test(...);
+					template <typename U>
+					inline static std::false_type test(...);
 
-				public:
+					public:
 					using type = decltype(test<T>(0));
 				};
 
@@ -65,15 +63,14 @@ namespace gltfpp {
 
 				template <typename T, bool = is_swappable<T>::value>
 				struct is_nothrow_swappable {
-					static constexpr bool value =
-					noexcept(swap(std::declval<T &>(), std::declval<T &>()));
+					static constexpr bool value = noexcept(swap(std::declval<T &>(), std::declval<T &>()));
 				};
 
 				template <typename T>
 				struct is_nothrow_swappable<T, false> : std::false_type {};
 
-			}  // namespace swappable
-		}  // namespace detail
+			}	// namespace swappable
+		}		 // namespace detail
 
 		template <typename T>
 		using is_swappable = detail::swappable::is_swappable<T>;

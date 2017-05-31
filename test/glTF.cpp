@@ -40,8 +40,7 @@ TEST_CASE("glTF_BufferView", "[glTF]") {
 	json minimalBuffer{"byteLength", 42};
 	source["buffer"] = {minimalBuffer, minimalBuffer, minimalBuffer};
 
-	json minimalBufferView{
-		{"buffer", 0}, {"byteOffset", 0}, {"byteLength", 1}, {"target", "ARRAY_BUFFER"}};
+	json minimalBufferView{{"buffer", 0}, {"byteOffset", 0}, {"byteLength", 1}, {"target", "ARRAY_BUFFER"}};
 
 	source["bufferViews"] = {minimalBufferView, minimalBufferView};
 
