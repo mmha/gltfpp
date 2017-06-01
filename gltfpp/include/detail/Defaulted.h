@@ -47,21 +47,21 @@ namespace gltfpp {
 				return &val;
 			}
 
-#define DEFAULTED_COMPARISON_OVERLOAD(op)                                                                       \
+#define GLTFPP_DEFAULTED_COMPARISON_OVERLOAD(op)                                                                       \
 	template <typename U>                                                                                       \
 	constexpr friend bool operator op(const defaulted<T> &lhs,                                                  \
 									  const defaulted<U> &rhs) noexcept(noexcept(lhs.value() op rhs.value())) { \
 		return lhs.value() op rhs.value();                                                                      \
 	}
 
-			DEFAULTED_COMPARISON_OVERLOAD(==)
-			DEFAULTED_COMPARISON_OVERLOAD(!=)
-			DEFAULTED_COMPARISON_OVERLOAD(<=)
-			DEFAULTED_COMPARISON_OVERLOAD(>=)
-			DEFAULTED_COMPARISON_OVERLOAD(<)
-			DEFAULTED_COMPARISON_OVERLOAD(>)
+			GLTFPP_DEFAULTED_COMPARISON_OVERLOAD(==)
+			GLTFPP_DEFAULTED_COMPARISON_OVERLOAD(!=)
+			GLTFPP_DEFAULTED_COMPARISON_OVERLOAD(<=)
+			GLTFPP_DEFAULTED_COMPARISON_OVERLOAD(>=)
+			GLTFPP_DEFAULTED_COMPARISON_OVERLOAD(<)
+			GLTFPP_DEFAULTED_COMPARISON_OVERLOAD(>)
 
-#undef DEFAULTED_COMPARISON_OVERLOAD
+#undef GLTFPP_DEFAULTED_COMPARISON_OVERLOAD
 
 			friend void swap(defaulted &self,
 							 defaulted &other) noexcept(detail::swappable::is_nothrow_swappable<T>::value) {
