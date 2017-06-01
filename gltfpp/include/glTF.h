@@ -27,6 +27,7 @@ namespace gltfpp {
 									 (option<std::vector<Animation>>, animations),
 									 (option<std::vector<Buffer>>, buffers),
 									 (option<std::vector<BufferView>>, bufferViews),
+									 (option<std::vector<Accessor>>, accessors),
 									 (option<nlohmann::json>, extensions),
 									 (option<nlohmann::json>, extras));
 			/*

@@ -1,5 +1,6 @@
 #pragma once
 #include "../glTF.h"
+#include "Accessor.h"
 #include "Buffer.h"
 #include "BufferView.h"
 #include "Parsing.h"
