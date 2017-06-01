@@ -7,7 +7,7 @@
 namespace gltfpp {
 	inline namespace v1 {
 		inline auto parse(BufferView &view) noexcept {
-			return [&](ParseContext ctx) noexcept -> gltf_result<ParseContext> {
+			return [&](ParseContext ctx) noexcept->gltf_result<ParseContext> {
 				std::size_t bufferIdx{};
 				std::ptrdiff_t offset{};
 				std::ptrdiff_t length{};

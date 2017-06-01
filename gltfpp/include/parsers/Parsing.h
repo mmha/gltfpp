@@ -34,7 +34,7 @@ namespace gltfpp {
 
 		template <typename T>
 		auto field(option<T> &target, char const *key) noexcept {
-			return [&target, key](ParseContext ctx) noexcept -> gltf_result<ParseContext> {
+			return [&target, key ](ParseContext ctx) noexcept->gltf_result<ParseContext> {
 				auto valIt = ctx.json->find(key);
 				if(valIt != ctx.json->end()) {
 					target.set_value();
@@ -51,7 +51,7 @@ namespace gltfpp {
 
 		template <typename T>
 		auto field(T &target, char const *key) noexcept {
-			return [&target, key](ParseContext ctx) noexcept -> gltf_result<ParseContext> {
+			return [&target, key ](ParseContext ctx) noexcept->gltf_result<ParseContext> {
 				auto valIt = ctx.json->find(key);
 				if(valIt != ctx.json->end()) {
 					auto newCtx = ParseContext{ctx.root, std::addressof(*valIt)};
@@ -69,7 +69,7 @@ namespace gltfpp {
 
 		template <typename T>
 		auto field(defaulted<T> &target, char const *key) noexcept {
-			return [&target, key](ParseContext ctx) noexcept -> gltf_result<ParseContext> {
+			return [&target, key ](ParseContext ctx) noexcept->gltf_result<ParseContext> {
 				auto valIt = ctx.json->find(key);
 				if(valIt != ctx.json->end()) {
 					auto newCtx = ParseContext{ctx.root, std::addressof(*valIt)};
@@ -83,8 +83,8 @@ namespace gltfpp {
 		}
 
 		template <typename T>
-		auto aggregate(T &target) noexcept{
-			return [&target](ParseContext ctx) noexcept -> gltf_result<ParseContext> {
+		auto aggregate(T &target) noexcept {
+			return [&target](ParseContext ctx) noexcept->gltf_result<ParseContext> {
 				using namespace boost::hana;
 				constexpr auto accessor = accessors<T>();
 				auto names = transform(accessor, first);
@@ -113,7 +113,7 @@ namespace gltfpp {
 
 		template <typename T, typename std::enable_if_t<detail::is_fundamental_json_type<T>> *>
 		auto parse(T &target) noexcept {
-			return [&target](ParseContext ctx) noexcept -> gltf_result<ParseContext> {
+			return [&target](ParseContext ctx) noexcept->gltf_result<ParseContext> {
 				// TODO this is not a complete check
 				if(ctx.json) {
 					target = ctx.json->template get<T>();
@@ -125,7 +125,7 @@ namespace gltfpp {
 
 		template <typename T, typename std::enable_if_t<detail::is_field_list<T>> *>
 		auto parse(T &target) noexcept {
-			return [&target](ParseContext ctx) noexcept -> gltf_result<ParseContext> {
+			return [&target](ParseContext ctx) noexcept->gltf_result<ParseContext> {
 				if(!ctx.json) {
 					return make_unexpected(gltf_error::key_not_found);
 				}
@@ -151,7 +151,7 @@ namespace gltfpp {
 
 		template <typename T, typename std::enable_if_t<detail::is_enumeration<T>> *>
 		auto parse(T &target) noexcept {
-			return [&target](ParseContext ctx) noexcept -> gltf_result<ParseContext> {
+			return [&target](ParseContext ctx) noexcept->gltf_result<ParseContext> {
 				if(!ctx.json) {
 					return make_unexpected(gltf_error::key_not_found);
 				}

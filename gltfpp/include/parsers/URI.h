@@ -27,7 +27,8 @@ namespace gltfpp {
 			};
 
 			template <typename CharIterator>
-			auto parse_data_uri(CharIterator uri_begin, CharIterator uri_end) noexcept -> data_uri_result<CharIterator> {
+			auto parse_data_uri(CharIterator uri_begin, CharIterator uri_end) noexcept
+				-> data_uri_result<CharIterator> {
 				using std::begin;
 				using std::end;
 				data_uri_result<CharIterator> result;
@@ -64,7 +65,7 @@ namespace gltfpp {
 
 		inline auto parse(URI &uri) noexcept {
 			using namespace detail;
-			return [&](ParseContext ctx) noexcept -> gltf_result<ParseContext> {
+			return [&](ParseContext ctx) noexcept->gltf_result<ParseContext> {
 				if(!ctx.json->is_string()) {
 					return make_unexpected(gltf_error::type_error);
 				}
