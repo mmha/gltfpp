@@ -32,6 +32,6 @@ namespace gltfpp {
 		};
 
 		template <typename T>
-		auto parse(Accessor<T> &) -> gltf_result<ParseContext>;
+		auto parse(Accessor<T> &) noexcept -> gltf_result<ParseContext>;
 	}	// namespace v1
 }	// namespace gltfpp

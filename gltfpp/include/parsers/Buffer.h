@@ -6,8 +6,8 @@
 
 namespace gltfpp {
 	inline namespace v1 {
-		inline auto parse(Buffer &b) {
-			return [&](const ParseContext &ctx) -> gltf_result<ParseContext> {
+		inline auto parse(Buffer &b) noexcept {
+			return [&](ParseContext const& ctx) noexcept -> gltf_result<ParseContext> {
 				std::size_t byteLength{};
 
 				// clang-format off

@@ -12,28 +12,28 @@ namespace gltfpp {
 				CharIterator mime_begin, mime_end;
 				CharIterator data_begin, data_end;
 
-				constexpr bool has_mime() const {
+				constexpr bool has_mime() const noexcept {
 					return mime_begin != mime_end;
 				}
 
-				constexpr bool has_data() const {
+				constexpr bool has_data() const noexcept {
 					// This should always be true
 					return data_begin != data_end;
 				}
 
-				constexpr operator bool() const {
+				constexpr operator bool() const noexcept {
 					return has_data();
 				}
 			};
 
 			template <typename CharIterator>
-			auto parse_data_uri(CharIterator uri_begin, CharIterator uri_end) -> data_uri_result<CharIterator> {
+			auto parse_data_uri(CharIterator uri_begin, CharIterator uri_end) noexcept -> data_uri_result<CharIterator> {
 				using std::begin;
 				using std::end;
 				data_uri_result<CharIterator> result;
 
 				constexpr char expected_prefix[] = "data:";
-				const auto prefixMatch = std::mismatch(begin(expected_prefix), end(expected_prefix), uri_begin);
+				auto const prefixMatch = std::mismatch(begin(expected_prefix), end(expected_prefix), uri_begin);
 				if(prefixMatch.first == end(expected_prefix)) {
 					return {};
 				}
@@ -62,15 +62,15 @@ namespace gltfpp {
 			}
 		}	// namespace detail
 
-		inline auto parse(URI &uri) {
+		inline auto parse(URI &uri) noexcept {
 			using namespace detail;
-			return [&](ParseContext ctx) -> gltf_result<ParseContext> {
+			return [&](ParseContext ctx) noexcept -> gltf_result<ParseContext> {
 				if(!ctx.json->is_string()) {
 					return make_unexpected(gltf_error::type_error);
 				}
 				// TODO is there a view type that does not allocate in nlohmann::json?
-				const auto &str = ctx.json->get<std::string>();
-				const auto parse_result = parse_data_uri(str.begin(), str.end());
+				auto const &str = ctx.json->get<std::string>();
+				auto const parse_result = parse_data_uri(str.begin(), str.end());
 				if(!parse_result) {
 					return make_unexpected(gltf_error::decode_error);
 				}

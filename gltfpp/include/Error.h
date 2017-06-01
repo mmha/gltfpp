@@ -22,7 +22,7 @@ namespace gltfpp {
 	inline namespace v1 {
 		namespace detail {
 			struct gltf_error_category final : std::error_category {
-				const char *name() const noexcept override {
+				char const *name() const noexcept override {
 					return "glTF error";
 				}
 
@@ -62,7 +62,7 @@ namespace gltfpp {
 			};
 		}	// namespace detail
 
-		inline const detail::gltf_error_category &gltf_error_category() {
+		inline detail::gltf_error_category const &gltf_error_category() {
 			static detail::gltf_error_category c;
 			return c;
 		}

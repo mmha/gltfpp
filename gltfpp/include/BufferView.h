@@ -22,10 +22,10 @@ namespace gltfpp {
 									 (defaulted<uint8_t>, byteStride),
 									 (option<nlohmann::json>, extensions),
 									 (option<nlohmann::json>, extras));
-			gsl::span<const byte> span;
-			const Buffer *buffer;
+			gsl::span<byte const> span;
+			Buffer const *buffer;
 		};
 
-		auto parse(BufferView &);
+		auto parse(BufferView &) noexcept;
 	}	// namespace v1
 }	// namespace gltfpp

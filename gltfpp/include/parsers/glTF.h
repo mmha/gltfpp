@@ -7,7 +7,7 @@
 
 namespace gltfpp {
 	inline namespace v1 {
-		inline gltf_result<void> from_json(const nlohmann::json &j, glTF &g) {
+		inline gltf_result<void> from_json(nlohmann::json const &j, glTF &g) noexcept {
 			ParseContext ctx{&g, &j};
 			auto result = aggregate(g)(ctx);
 

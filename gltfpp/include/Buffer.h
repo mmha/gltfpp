@@ -16,6 +16,6 @@ namespace gltfpp {
 									 (option<nlohmann::json>, extras));
 		};
 
-		auto parse(Buffer &b);
+		auto parse(Buffer &b) noexcept;
 	}	// namespace v1
 }	// namespace gltfpp

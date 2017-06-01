@@ -43,6 +43,6 @@ namespace gltfpp {
 			*/
 		};
 
-		gltf_result<void> from_json(const nlohmann::json &j, glTF &a);
+		gltf_result<void> from_json(const nlohmann::json &j, glTF &a) noexcept;
 	}	// namespace v1
 }	// namespace gltfpp

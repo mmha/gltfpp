@@ -17,24 +17,24 @@ namespace gltfpp {
 
 		struct ParseContext {
 			glTF *root = nullptr;
-			const nlohmann::json *json = nullptr;
+			nlohmann::json const *json = nullptr;
 		};
 
 		template <typename T, typename std::enable_if_t<detail::is_field_aggregate<T>> * = nullptr>
-		auto parse(T &target);
+		auto parse(T &target) noexcept;
 
 		template <typename T, typename std::enable_if_t<detail::is_fundamental_json_type<T>> * = nullptr>
-		auto parse(T &target);
+		auto parse(T &target) noexcept;
 
 		template <typename T, typename std::enable_if_t<detail::is_field_list<T>> * = nullptr>
-		auto parse(T &target);
+		auto parse(T &target) noexcept;
 
 		template <typename T, typename std::enable_if_t<detail::is_enumeration<T>> * = nullptr>
-		auto parse(T &target);
+		auto parse(T &target) noexcept;
 
 		template <typename T>
-		auto field(option<T> &target, const char *key) {
-			return [&target, key](ParseContext ctx) -> gltf_result<ParseContext> {
+		auto field(option<T> &target, char const *key) noexcept {
+			return [&target, key](ParseContext ctx) noexcept -> gltf_result<ParseContext> {
 				auto valIt = ctx.json->find(key);
 				if(valIt != ctx.json->end()) {
 					target.set_value();
@@ -50,8 +50,8 @@ namespace gltfpp {
 		}
 
 		template <typename T>
-		auto field(T &target, const char *key) {
-			return [&target, key](ParseContext ctx) -> gltf_result<ParseContext> {
+		auto field(T &target, char const *key) noexcept {
+			return [&target, key](ParseContext ctx) noexcept -> gltf_result<ParseContext> {
 				auto valIt = ctx.json->find(key);
 				if(valIt != ctx.json->end()) {
 					auto newCtx = ParseContext{ctx.root, std::addressof(*valIt)};
@@ -68,8 +68,8 @@ namespace gltfpp {
 		}
 
 		template <typename T>
-		auto field(defaulted<T> &target, const char *key) {
-			return [&target, key](ParseContext ctx) -> gltf_result<ParseContext> {
+		auto field(defaulted<T> &target, char const *key) noexcept {
+			return [&target, key](ParseContext ctx) noexcept -> gltf_result<ParseContext> {
 				auto valIt = ctx.json->find(key);
 				if(valIt != ctx.json->end()) {
 					auto newCtx = ParseContext{ctx.root, std::addressof(*valIt)};
@@ -83,8 +83,8 @@ namespace gltfpp {
 		}
 
 		template <typename T>
-		auto aggregate(T &target) {
-			return [&target](ParseContext ctx) -> gltf_result<ParseContext> {
+		auto aggregate(T &target) noexcept{
+			return [&target](ParseContext ctx) noexcept -> gltf_result<ParseContext> {
 				using namespace boost::hana;
 				constexpr auto accessor = accessors<T>();
 				auto names = transform(accessor, first);
@@ -95,7 +95,7 @@ namespace gltfpp {
 					if(!c) {
 						return c;	// I hope the optimizer understands that...
 					}
-					auto name = to<const char *>(entry[size_c<0>]);
+					auto name = to<char const *>(entry[size_c<0>]);
 					auto &member = entry[size_c<1>].get();
 					return c >> field(member, name);
 				});
@@ -107,13 +107,13 @@ namespace gltfpp {
 		}
 
 		template <typename T, typename std::enable_if_t<detail::is_field_aggregate<T>> *>
-		auto parse(T &target) {
+		auto parse(T &target) noexcept {
 			return aggregate(target);
 		}
 
 		template <typename T, typename std::enable_if_t<detail::is_fundamental_json_type<T>> *>
-		auto parse(T &target) {
-			return [&target](ParseContext ctx) -> gltf_result<ParseContext> {
+		auto parse(T &target) noexcept {
+			return [&target](ParseContext ctx) noexcept -> gltf_result<ParseContext> {
 				// TODO this is not a complete check
 				if(ctx.json) {
 					target = ctx.json->template get<T>();
@@ -124,8 +124,8 @@ namespace gltfpp {
 		}
 
 		template <typename T, typename std::enable_if_t<detail::is_field_list<T>> *>
-		auto parse(T &target) {
-			return [&target](ParseContext ctx) -> gltf_result<ParseContext> {
+		auto parse(T &target) noexcept {
+			return [&target](ParseContext ctx) noexcept -> gltf_result<ParseContext> {
 				if(!ctx.json) {
 					return make_unexpected(gltf_error::key_not_found);
 				}
@@ -150,13 +150,13 @@ namespace gltfpp {
 		}
 
 		template <typename T, typename std::enable_if_t<detail::is_enumeration<T>> *>
-		auto parse(T &target) {
-			return [&target](ParseContext ctx) -> gltf_result<ParseContext> {
+		auto parse(T &target) noexcept {
+			return [&target](ParseContext ctx) noexcept -> gltf_result<ParseContext> {
 				if(!ctx.json) {
 					return make_unexpected(gltf_error::key_not_found);
 				}
-				const auto str = ctx.json->get<std::string>();
-				const auto parsed = T::_from_string_nothrow(str.c_str());
+				auto const str = ctx.json->get<std::string>();
+				auto const parsed = T::_from_string_nothrow(str.c_str());
 				if(!parsed) {
 					return make_unexpected(gltf_error::decode_error);
 				}
@@ -166,7 +166,7 @@ namespace gltfpp {
 		}
 
 		template <typename CharInputIterator, typename ByteOutputIterator>
-		auto decode_embedded_base64(CharInputIterator first, CharInputIterator last, ByteOutputIterator out) {
+		auto decode_embedded_base64(CharInputIterator first, CharInputIterator last, ByteOutputIterator out) noexcept {
 			using b64 = boost::archive::iterators::transform_width<
 				boost::archive::iterators::binary_from_base64<std::string::const_iterator>, 8, 6>;
 			return std::transform(b64(first), b64(last), out, [](char c) { return static_cast<byte>(c); });
