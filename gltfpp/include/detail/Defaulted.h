@@ -63,7 +63,7 @@ namespace gltfpp {
 
 #undef GLTFPP_DEFAULTED_COMPARISON_OVERLOAD
 
-			friend void swap(defaulted &self,
+			constexpr friend void swap(defaulted &self,
 							 defaulted &other) noexcept(detail::swappable::is_nothrow_swappable<T>::value) {
 				using std::swap;
 				swap(self.val, other.val);
