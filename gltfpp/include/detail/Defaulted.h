@@ -18,7 +18,7 @@ namespace gltfpp {
 			}
 
 			template <typename U>
-			constexpr defaulted operator=(U &&rhs) noexcept(noexcept(val = std::forward<U>(rhs))) {
+			constexpr defaulted &operator=(U &&rhs) noexcept(noexcept(val = std::forward<U>(rhs))) {
 				val = std::forward<U>(rhs);
 				return *this;
 			}

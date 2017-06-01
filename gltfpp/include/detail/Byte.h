@@ -19,25 +19,25 @@ namespace gltfpp {
 			return Integer(b);
 		}
 
-		template <class Integer>
+		template <typename Integer>
 		constexpr auto operator<<=(byte &b, Integer shift) noexcept
 			-> std::enable_if_t<std::is_integral<Integer>::value, byte &> {
 			return b = byte(static_cast<unsigned char>(b) << shift);
 		}
 
-		template <class Integer>
+		template <typename Integer>
 		constexpr auto operator>>=(byte &b, Integer shift) noexcept
 			-> std::enable_if_t<std::is_integral<Integer>::value, byte &> {
 			return b = byte(static_cast<unsigned char>(b) >> shift);
 		}
 
-		template <class Integer>
+		template <typename Integer>
 		constexpr auto operator<<(byte &b, Integer shift) noexcept
 			-> std::enable_if_t<std::is_integral<Integer>::value, byte> {
 			return byte(static_cast<unsigned char>(b) << shift);
 		}
 
-		template <class Integer>
+		template <typename Integer>
 		constexpr auto operator>>(byte &b, Integer shift) noexcept
 			-> std::enable_if_t<std::is_integral<Integer>::value, byte> {
 			return byte(static_cast<unsigned char>(b) >> shift);
