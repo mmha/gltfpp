@@ -6,7 +6,7 @@
 
 namespace gltfpp {
 	inline namespace v1 {
-		auto parse(Accessor &a) noexcept {
+		inline auto parse(Accessor &a) noexcept {
 			return [&](ParseContext ctx) noexcept->gltf_result<ParseContext> {
 				std::size_t bufferViewIdx{};
 

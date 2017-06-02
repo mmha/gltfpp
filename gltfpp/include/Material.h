@@ -6,13 +6,22 @@
 namespace gltfpp {
 	inline namespace v1 {
 		struct Material {
+			struct PBRMetalllicRoughness {
+				BOOST_HANA_DEFINE_STRUCT(PBRMetalllicRoughness,
+										 (std::array<double, 3>, baseColorFactor),
+										 (Texture, baseColorTexture),
+										 (double, metallicFactor),
+										 (double, roughnessFactor),
+										 (Texture, metallicRoughnessTexture));
+			};
+
 			BOOST_HANA_DEFINE_STRUCT(Material,
 									 (std::vector<Texture>, textures),
 									 (option<std::string>, name),
 									 (option<nlohmann::json>, extensions),
 									 (option<nlohmann::json>, exteas),
-									 // metallic roughness
-									 (std::array<float, 3>, emissiveFactor));
+									 (PBRMetalllicRoughness, pbrMetallicRoughness),
+									 (std::array<double, 3>, emissiveFactor));
 		};
 	}	// namespace v1
 }	// namespace gltfpp
