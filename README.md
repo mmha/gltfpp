@@ -28,6 +28,7 @@ By passing the flag `-DGLTFPP_AS_HTML=1`, emscripten generates a html page with 
 
 Running the tests
 -----------------
+*[Run them in your browser (requires WebAssembly support)](https://mmha.github.io/gltfpp/)*
 ```
 mkdir build && cd build
 cmake .. -DGLTFPP_BUILD_TESTS=1 [-GNinja]
