@@ -24,6 +24,7 @@ Install emscripten, then invoke CMake via emconfigure:
 emconfigure cmake .. [-GNinja] [-DGLTFPP_WEBASSEMBLY=1] # Default is wasm instead of asm.js
 ```
 Compiling to WebAssembly requires binaryen. Note that this library does not export anything, so you can't use it in the browser yet.
+By passing the flag `-DGLTFPP_AS_HTML=1`, emscripten generates a html page with a terminal emulator for each executable (read: the unit test runner).
 
 Running the tests
 -----------------

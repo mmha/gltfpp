@@ -18,8 +18,12 @@ if(GLTFPP_ENABLE_MODULES AND "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" AND NOT
 endif()
 if(EMSCRIPTEN)
 	option(GLTFPP_WEBASSEMBLY "Generate WebAssembly instead of asm.js" ON)
+	option(GLTFPP_AS_HTML "Generate a HTML page with a terminal emulator" OFF)
 	if(GLTFPP_WEBASSEMBLY)
 		set(CMAKE_CXX_FLAGS "-s WASM=1 --bind")
+	endif()
+	if(GLTFPP_AS_HTML)
+		set(CMAKE_EXECUTABLE_SUFFIX ".html")
 	endif()
 endif()
 
