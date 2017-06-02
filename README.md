@@ -12,6 +12,7 @@ Requirements
 - CMake >= 3.2
 - Boost >= 1.61
 
+[Boost.Outcome](https://github.com/ned14/boost.outcome), [GSL](https://github.com/Microsoft/gsl), [nlohmann/json](https://github.com/nlohmann/json), [better-enums](https://github.com/aantron/better-enums) and [Catch](https://github.com/philsquared/Catch) are included via git submodules.
 Building
 --------
 gltfpp is header only and therefore does not require a build step. Make sure you have all dependencies set up correctly if you only copy the directory. Additionally, add `BOOST_OUTCOME_ENABLE_ADVANCED` as a definition.
