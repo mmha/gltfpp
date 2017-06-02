@@ -13,16 +13,146 @@ module thirdparty [system] {
 		umbrella header "../../3rdparty/json/src/json.hpp"
 		export *
 	}
-
-	export *
+	
+	module better_enums [system] {
+		header "../../3rdparty/better-enums/enum.h"
+		export *
+	}
 }
 
 module glTF {
-  module parsers {
-	umbrella header "parsers/glTF.h"
-  }
+	use thirdparty
 
-  use thirdparty
-  umbrella header "gltfpp.h"
-  export *
+	module parsers {
+		module Accessor {
+			header "parsers/Accessor.h"
+			export *
+		}
+		module Buffer {
+			header "parsers/Buffer.h"
+			export *
+		}
+		module BufferView {
+			header "parsers/BufferView.h"
+			export *
+		}
+		module glTF {
+			header "parsers/glTF.h"
+			export *
+		}
+		module Parsing {
+			header "parsers/Parsing.h"
+			export *
+		}
+		module URI {
+			header "parsers/URI.h"
+			export *
+		}
+	}
+	
+	module detail {
+		module Byte {
+			header "detail/Byte.h"
+			export *
+		}
+		module Defaulted {
+			header "detail/Defaulted.h"
+			export *
+		}
+	}
+
+	module Accessor {
+		header "Accessor.h"
+		export *
+	}
+
+	module Animation {
+		header "Animation.h"
+		export *
+	}
+
+	module Asset {
+		header "Asset.h"
+		export *
+	}
+
+	module Buffer {
+		header "Buffer.h"
+		export *
+	}
+
+	module BufferView {
+		header "BufferView.h"
+		export *
+	}
+
+	module Camera {
+		header "Camera.h"
+		export *
+	}
+
+	module Enum {
+		header "Enum.h"
+		export *
+	}
+
+	module Error {
+		header "Error.h"
+		export *
+	}
+
+	module Image {
+		header "Image.h"
+		export *
+	}
+
+	module Material {
+		header "Material.h"
+		export *
+	}
+
+	module Mesh {
+		header "Mesh.h"
+		export *
+	}
+
+	module Meta {
+		header "Meta.h"
+		export *
+	}
+
+	module Node {
+		header "Node.h"
+		export *
+	}
+
+	module Sampler {
+		header "Sampler.h"
+		export *
+	}
+
+	module Scene {
+		header "Scene.h"
+		export *
+	}
+
+	module Skin {
+		header "Skin.h"
+		export *
+	}
+
+	module Texture {
+		header "Texture.h"
+		export *
+	}
+
+	module URI {
+		header "URI.h"
+		export *
+	}
+	
+	module glTF {
+		header "glTF.h"
+		export *
+	}
 }
