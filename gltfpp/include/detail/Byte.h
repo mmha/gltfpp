@@ -10,7 +10,7 @@ namespace gltfpp {
 	inline namespace v1 {
 		enum class byte : unsigned char {};
 
-		constexpr byte operator""_b(unsigned long long b) {
+		constexpr byte operator""_b(unsigned long long b) noexcept {
 			return static_cast<byte>(b);
 		}
 

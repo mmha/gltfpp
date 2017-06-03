@@ -19,7 +19,7 @@ namespace gltfpp {
 									 (std::vector<Texture>, textures),
 									 (option<std::string>, name),
 									 (option<nlohmann::json>, extensions),
-									 (option<nlohmann::json>, exteas),
+									 (option<nlohmann::json>, extras),
 									 (PBRMetalllicRoughness, pbrMetallicRoughness),
 									 (std::array<double, 3>, emissiveFactor));
 		};
