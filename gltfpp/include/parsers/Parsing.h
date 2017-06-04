@@ -114,12 +114,17 @@ namespace gltfpp {
 		template <typename T, typename std::enable_if_t<detail::is_fundamental_json_type<T>> *>
 		auto parse(T &target) noexcept {
 			return [&target](ParseContext ctx) noexcept->gltf_result<ParseContext> {
-				// TODO this is not a complete check
-				if(ctx.json) {
-					target = ctx.json->template get<T>();
-					return ctx;
+				// TODO avoid catching exception
+				try {
+					if(ctx.json) {
+						target = ctx.json->template get<T>();
+						return ctx;
+					}
+					return make_unexpected(gltf_error::key_not_found);
 				}
-				return make_unexpected(gltf_error::key_not_found);
+				catch(const std::domain_error &) {
+					return make_unexpected(gltf_error::type_error);
+				}
 			};
 		}
 
