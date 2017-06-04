@@ -1,4 +1,5 @@
 #pragma once
+#define BOOST_OUTCOME_ENABLE_ADVANCED
 #include <boost/outcome.hpp>
 #include <system_error>
 
