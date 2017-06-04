@@ -1,21 +1,19 @@
 #include "parsers/URI.h"
 #include "glTF.h"
 #include <catch.hpp>
-#include <json.hpp>
 
 using namespace gltfpp;
 using namespace gltfpp::detail;
-using nlohmann::json;
 
-TEST_CASE("DataUri_invalid", "[DataUri]") {
+TEST_CASE("URI_invalid", "[URI]") {
 	constexpr char http[] = "http://example.com/teapot.glb";
-	REQUIRE(!parse_data_uri(std::begin(http), std::end(http)));
+	CHECK(!parse_data_uri(std::begin(http), std::end(http)));
 
 	constexpr char too_short[] = "dat";
-	REQUIRE(!parse_data_uri(std::begin(too_short), std::end(too_short)));
+	CHECK(!parse_data_uri(std::begin(too_short), std::end(too_short)));
 }
 
-TEST_CASE("DataUri_valid", "[DataUri]") {
+TEST_CASE("URI_valid", "[URI]") {
 	auto verify = [](auto &&test_string) {
 		const auto begin = std::begin(std::forward<decltype(test_string)>(test_string));
 		const auto end = std::end(std::forward<decltype(test_string)>(test_string));
@@ -38,9 +36,9 @@ TEST_CASE("DataUri_valid", "[DataUri]") {
 	constexpr char nontrivial2[] = "data:text/plain;base64,UGFyc2V5IE1jUGFyc2VmYWNl";
 	{
 		const auto result = verify(nontrivial2);
-		REQUIRE(result.data_begin == nontrivial2 + 23);
-		REQUIRE(result.data_end == std::end(nontrivial2));
-		REQUIRE(result.mime_begin == nontrivial2 + 5);
-		REQUIRE(result.mime_end == nontrivial2 + 5 + 10);
+		CHECK(result.data_begin == nontrivial2 + 23);
+		CHECK(result.data_end == std::end(nontrivial2));
+		CHECK(result.mime_begin == nontrivial2 + 5);
+		CHECK(result.mime_end == nontrivial2 + 5 + 10);
 	}
 }

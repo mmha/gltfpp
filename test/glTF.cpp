@@ -1,9 +1,8 @@
 #include "gltfpp.h"
-#include <catch.hpp>
+#include "common.h"
 
 using namespace gltfpp;
 using nlohmann::json;
-using namespace std::literals;
 
 namespace {
 	const auto minimalglTF = R"({
@@ -18,10 +17,10 @@ namespace {
 TEST_CASE("glTF_Minimal", "[glTF]") {
 	glTF target;
 	const auto success = from_json(minimalglTF, target);
-	REQUIRE(success);
-	REQUIRE(target.asset.version == "2.0");
-	REQUIRE(target.asset.generator.get() == "collada2gltf@f356b99aef8868f74877c7ca545f2cd206b9d3b7");
-	REQUIRE(target.asset.copyright.get() == "2017 (c) Khronos Group");
+	REQUIRE_GLTF_RESULT(success);
+	CHECK(target.asset.version == "2.0");
+	CHECK_GLTF_OPTION(target.asset.generator, "collada2gltf@f356b99aef8868f74877c7ca545f2cd206b9d3b7");
+	CHECK_GLTF_OPTION(target.asset.copyright, "2017 (c) Khronos Group");
 }
 
 TEST_CASE("glTF_Buffer", "[glTF]") {
@@ -31,7 +30,7 @@ TEST_CASE("glTF_Buffer", "[glTF]") {
 	source["buffer"] = {minimalBuffer, minimalBuffer, minimalBuffer};
 
 	const auto success = from_json(source, target);
-	REQUIRE(success);
+	REQUIRE_GLTF_RESULT(success);
 }
 
 TEST_CASE("glTF_BufferView", "[glTF]") {
@@ -45,8 +44,8 @@ TEST_CASE("glTF_BufferView", "[glTF]") {
 	source["bufferViews"] = {minimalBufferView, minimalBufferView};
 
 	const auto success = from_json(source, target);
-	REQUIRE(success);
-	REQUIRE(target.bufferViews);
+	REQUIRE_GLTF_RESULT(success);
+	REQUIRE(target.bufferViews.has_value());
 	REQUIRE(target.bufferViews->size() == 2);
 	REQUIRE(target.bufferViews.get()[0].target);
 	const bool enum_is_array_buffer = target.bufferViews.get()[0].target.get() == +BufferViewTarget::ARRAY_BUFFER;

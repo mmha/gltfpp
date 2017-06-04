@@ -1,3 +1,5 @@
+include(ParseAndAddCatchTests)
+
 add_executable(gltfpp_test
 	Asset.cpp
 	Buffer.cpp
@@ -5,8 +7,10 @@ add_executable(gltfpp_test
 	URI.cpp
 	testmain.cpp
 )
-
+ParseAndAddCatchTests(gltfpp_test)
 target_link_libraries(gltfpp_test PRIVATE Catch gltfpp)
+
+file(COPY data DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 add_executable(simple_consumer
 	simple_consumer.cpp

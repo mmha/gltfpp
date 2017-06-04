@@ -1,0 +1,16 @@
+{
+    "uri": "data:text/plain;base64,UGFyc2V5IE1jUGFyc2VmYWNl",
+    "byteLength": 18,
+    "name": "Utah Teapot",
+    "extras": [
+        0,
+        1,
+        2,
+        3
+    ],
+    "extensions": {
+        "KHR_materials_common": {
+            "technique": "LAMBERT"
+        }
+    }
+}

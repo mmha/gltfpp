@@ -1,0 +1,12 @@
+{
+    "copyright": "2017 (c) Khronos Group",
+    "generator": "collada2gltf@f356b99aef8868f74877c7ca545f2cd206b9d3b7",
+    "version": "2.0",
+    "minVersion": "2.0",
+    "extensions": {
+        "MY_EXTENSION": 42.0
+    },
+    "extras": [
+        "covfefe"
+    ]
+}

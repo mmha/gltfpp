@@ -44,4 +44,4 @@ before_script:
     - cd build
     - cmake .. ${CMAKE_OPTIONS} -DGLTFPP_BUILD_TESTS=1
 
-script: make -j2 gltfpp_test && test/gltfpp_test
+script: make -j2 gltfpp_test && ctest .

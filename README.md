@@ -16,7 +16,7 @@ Requirements
 
 Building
 --------
-gltfpp is header only and therefore does not require a build step. Make sure you have all dependencies set up correctly if you only copy the directory. Additionally, add `BOOST_OUTCOME_ENABLE_ADVANCED` as a definition.
+gltfpp is header only and therefore does not require a build step. Make sure you have all dependencies set up correctly if you only copy the directory.
 ### Clang Modules
 When using clang, modules can by enabled by passing `-DGLTFPP_ENABLE_MODULES=1` to CMake. This should speed up the compilation, however this is experimental and has only been tested with clang 5.0 snapshots so far.
 
@@ -35,7 +35,7 @@ Running the tests
 mkdir build && cd build
 cmake .. -DGLTFPP_BUILD_TESTS=1 [-GNinja]
 make gltfpp_test # Or ninja
-test/gltfpp_test
+ctest .
 ```
 ### Fuzzing
 To run the fuzzer, build the `fuzz` target and execute it via `test/fuzz`. There is no meaningful dictionary for efficient fuzzing yet.

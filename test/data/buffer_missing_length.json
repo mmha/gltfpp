@@ -1,0 +1,10 @@
+{
+    "uri": "https://example.com/teapot.bin",
+    "name": "Utah Teapot",
+    "extras": [
+        "I",
+        "am",
+        "an",
+        "array"
+    ]
+}
