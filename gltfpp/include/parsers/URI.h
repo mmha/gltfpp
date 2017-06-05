@@ -28,7 +28,7 @@ namespace gltfpp {
 
 			template <typename CharIterator>
 			auto parse_data_uri(CharIterator uri_begin, CharIterator uri_end) noexcept
-				-> data_uri_result<CharIterator> {
+			    -> data_uri_result<CharIterator> {
 				using std::begin;
 				using std::end;
 				data_uri_result<CharIterator> result;
@@ -44,7 +44,7 @@ namespace gltfpp {
 				{
 					result.mime_begin = prefixMatch.second;
 					result.mime_end =
-						std::find_if(result.mime_begin, uri_end, [](auto c) { return c == ',' || c == ';'; });
+					    std::find_if(result.mime_begin, uri_end, [](auto c) { return c == ',' || c == ';'; });
 					if(result.mime_end == uri_end) {
 						return {};
 					}
@@ -61,7 +61,7 @@ namespace gltfpp {
 				result.data_end = uri_end;
 				return result;
 			}
-		}	// namespace detail
+		}    // namespace detail
 
 		inline auto parse(URI &uri) noexcept {
 			using namespace detail;
@@ -82,5 +82,5 @@ namespace gltfpp {
 				return {};
 			};
 		}
-	}	// namespace v1
-}	// namespace gltfpp
+	}    // namespace v1
+}    // namespace gltfpp

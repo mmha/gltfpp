@@ -23,13 +23,13 @@ namespace gltfpp {
 	inline namespace v1 {
 		struct glTF {
 			BOOST_HANA_DEFINE_STRUCT(glTF,
-									 (Asset, asset),
-									 (option<std::vector<Animation>>, animations),
-									 (option<std::vector<Buffer>>, buffers),
-									 (option<std::vector<BufferView>>, bufferViews),
-									 (option<std::vector<Accessor>>, accessors),
-									 (option<nlohmann::json>, extensions),
-									 (option<nlohmann::json>, extras));
+			                         (Asset, asset),
+			                         (option<std::vector<Animation>>, animations),
+			                         (option<std::vector<Buffer>>, buffers),
+			                         (option<std::vector<BufferView>>, bufferViews),
+			                         (option<std::vector<Accessor>>, accessors),
+			                         (option<nlohmann::json>, extensions),
+			                         (option<nlohmann::json>, extras));
 			/*
 			std::vector<Camera> cameras;
 			std::vector<Image> images;
@@ -45,5 +45,5 @@ namespace gltfpp {
 		};
 
 		gltf_result<void> from_json(const nlohmann::json &j, glTF &a) noexcept;
-	}	// namespace v1
-}	// namespace gltfpp
+	}    // namespace v1
+}    // namespace gltfpp

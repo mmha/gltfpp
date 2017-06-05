@@ -19,8 +19,8 @@ inline std::string load_file(const std::string &filename) {
 template <typename UUT>
 struct common_fixture {
 	common_fixture(const std::string &filename)
-		: input_json(nlohmann::json::parse(load_file(filename)))
-		, ctx{&root, &input_json} {
+	    : input_json(nlohmann::json::parse(load_file(filename)))
+	    , ctx{&root, &input_json} {
 	}
 
 	nlohmann::json input_json;
@@ -34,7 +34,7 @@ class ResultError : public Catch::MatcherBase<gltfpp::gltf_result<gltfpp::ParseC
 
 	public:
 	explicit ResultError(gltfpp::gltf_error err)
-		: expected_error(err) {
+	    : expected_error(err) {
 	}
 
 	// Performs the test for this matcher
@@ -57,7 +57,7 @@ namespace gltfpp {
 	inline std::ostream &operator<<(std::ostream &os, const gltfpp::ParseContext &ctx) {
 		return os << "ParseContext{" << ctx.root << ", " << ctx.json << '}';
 	}
-}	// namespace gltfpp
+}    // namespace gltfpp
 
 // The builder function
 inline ResultError IsError(gltfpp::gltf_error err) {

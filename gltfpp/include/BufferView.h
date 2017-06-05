@@ -13,19 +13,19 @@ namespace gltfpp {
 
 		struct BufferView {
 			BufferView()
-				: byteStride{0} {
+			    : byteStride{0} {
 			}
 
 			BOOST_HANA_DEFINE_STRUCT(BufferView,
-									 (option<BufferViewTarget>, target),
-									 (option<std::string>, name),
-									 (defaulted<uint8_t>, byteStride),
-									 (option<nlohmann::json>, extensions),
-									 (option<nlohmann::json>, extras));
+			                         (option<BufferViewTarget>, target),
+			                         (option<std::string>, name),
+			                         (defaulted<uint8_t>, byteStride),
+			                         (option<nlohmann::json>, extensions),
+			                         (option<nlohmann::json>, extras));
 			gsl::span<byte const> span;
 			Buffer const *buffer;
 		};
 
 		auto parse(BufferView &) noexcept;
-	}	// namespace v1
-}	// namespace gltfpp
+	}    // namespace v1
+}    // namespace gltfpp

@@ -9,10 +9,10 @@ namespace gltfpp {
 	inline namespace v1 {
 		struct Node {
 			BOOST_HANA_DEFINE_STRUCT(Node,
-									 (std::vector<Node>, nodes),
-									 (std::vector<Mesh>, meshes),
-									 (Skin, skin),
-									 (Camera, camera));
+			                         (std::vector<Node>, nodes),
+			                         (std::vector<Mesh>, meshes),
+			                         (Skin, skin),
+			                         (Camera, camera));
 		};
-	}	// namespace v1
-}	// namespace gltfpp
+	}    // namespace v1
+}    // namespace gltfpp

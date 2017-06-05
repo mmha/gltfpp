@@ -8,5 +8,5 @@ namespace gltfpp {
 		struct Texture {
 			BOOST_HANA_DEFINE_STRUCT(Texture, (Image, image), (Sampler, sampler));
 		};
-	}	// namespace v1
-}	// namespace gltfpp
+	}    // namespace v1
+}    // namespace gltfpp

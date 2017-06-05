@@ -6,5 +6,5 @@ namespace gltfpp {
 		struct Sampler {
 			BOOST_HANA_DEFINE_STRUCT(Sampler);
 		};
-	}	// namespace v1
-}	// namespace gltfpp
+	}    // namespace v1
+}    // namespace gltfpp

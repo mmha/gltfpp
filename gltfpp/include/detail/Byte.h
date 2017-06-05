@@ -21,25 +21,25 @@ namespace gltfpp {
 
 		template <typename Integer>
 		constexpr auto operator<<=(byte &b, Integer shift) noexcept
-			-> std::enable_if_t<std::is_integral<Integer>::value, byte &> {
+		    -> std::enable_if_t<std::is_integral<Integer>::value, byte &> {
 			return b = byte(static_cast<unsigned char>(b) << shift);
 		}
 
 		template <typename Integer>
 		constexpr auto operator>>=(byte &b, Integer shift) noexcept
-			-> std::enable_if_t<std::is_integral<Integer>::value, byte &> {
+		    -> std::enable_if_t<std::is_integral<Integer>::value, byte &> {
 			return b = byte(static_cast<unsigned char>(b) >> shift);
 		}
 
 		template <typename Integer>
 		constexpr auto operator<<(byte &b, Integer shift) noexcept
-			-> std::enable_if_t<std::is_integral<Integer>::value, byte> {
+		    -> std::enable_if_t<std::is_integral<Integer>::value, byte> {
 			return byte(static_cast<unsigned char>(b) << shift);
 		}
 
 		template <typename Integer>
 		constexpr auto operator>>(byte &b, Integer shift) noexcept
-			-> std::enable_if_t<std::is_integral<Integer>::value, byte> {
+		    -> std::enable_if_t<std::is_integral<Integer>::value, byte> {
 			return byte(static_cast<unsigned char>(b) >> shift);
 		}
 
@@ -66,5 +66,5 @@ namespace gltfpp {
 		constexpr byte operator^(byte l, byte r) noexcept {
 			return byte(static_cast<unsigned char>(l) | static_cast<unsigned char>(r));
 		}
-	}	// namespace v1
-}	// namespace gltfpp
+	}    // namespace v1
+}    // namespace gltfpp

@@ -11,13 +11,13 @@ namespace gltfpp {
 			gltf_error() = default;
 			inline gltf_error(cases error);
 		};
-	}	// namespace v1
-}	// namespace gltfpp
+	}    // namespace v1
+}    // namespace gltfpp
 
 namespace std {
 	template <>
 	struct is_error_code_enum<gltfpp::gltf_error::cases> : std::true_type {};
-}	// namespace std
+}    // namespace std
 
 namespace gltfpp {
 	inline namespace v1 {
@@ -55,13 +55,13 @@ namespace gltfpp {
 						case gltf_error::unimplemented:
 							return std::errc::function_not_supported;
 						case gltf_error::decode_error:
-							return std::errc::bad_message;	// TODO
+							return std::errc::bad_message;    // TODO
 						default:
 							return std::error_condition(error, *this);
 					}
 				}
 			};
-		}	// namespace detail
+		}    // namespace detail
 
 		inline detail::gltf_error_category const &gltf_error_category() {
 			static detail::gltf_error_category c;
@@ -69,7 +69,7 @@ namespace gltfpp {
 		}
 
 		gltf_error::gltf_error(gltf_error::cases e)
-			: std::error_code{e, gltf_error_category()} {
+		    : std::error_code{e, gltf_error_category()} {
 		}
 
 		inline gltf_error make_error_code(gltf_error::cases e) {
@@ -96,5 +96,5 @@ namespace gltfpp {
 			}
 			return empty_t{};
 		}
-	}	// namespace v1
-}	// namespace gltfpp
+	}    // namespace v1
+}    // namespace gltfpp

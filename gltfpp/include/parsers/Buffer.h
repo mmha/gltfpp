@@ -28,5 +28,5 @@ namespace gltfpp {
 				return ctx;
 			};
 		}
-	}	// namespace v1
-}	// namespace gltfpp
+	}    // namespace v1
+}    // namespace gltfpp

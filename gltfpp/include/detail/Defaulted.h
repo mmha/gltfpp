@@ -14,7 +14,7 @@ namespace gltfpp {
 
 			template <typename... Args>
 			constexpr defaulted(Args &&... args) noexcept(noexcept(T(std::forward<Args>(args)...)))
-				: val(std::forward<Args>(args)...) {
+			    : val(std::forward<Args>(args)...) {
 			}
 
 			template <typename U>
@@ -50,7 +50,7 @@ namespace gltfpp {
 #define GLTFPP_DEFAULTED_COMPARISON_OVERLOAD(op)                                                                \
 	template <typename U>                                                                                       \
 	constexpr friend bool operator op(const defaulted<T> &lhs,                                                  \
-									  const defaulted<U> &rhs) noexcept(noexcept(lhs.value() op rhs.value())) { \
+	                                  const defaulted<U> &rhs) noexcept(noexcept(lhs.value() op rhs.value())) { \
 		return lhs.value() op rhs.value();                                                                      \
 	}
 
@@ -64,10 +64,10 @@ namespace gltfpp {
 #undef GLTFPP_DEFAULTED_COMPARISON_OVERLOAD
 
 			constexpr friend void swap(defaulted &self,
-									   defaulted &other) noexcept(detail::swappable::is_nothrow_swappable<T>::value) {
+			                           defaulted &other) noexcept(detail::swappable::is_nothrow_swappable<T>::value) {
 				using std::swap;
 				swap(self.val, other.val);
 			}
 		};
-	}	// namespace v1
-}	// namespace gltfpp
+	}    // namespace v1
+}    // namespace gltfpp

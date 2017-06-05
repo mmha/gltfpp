@@ -8,5 +8,5 @@ namespace gltfpp {
 		struct Scene {
 			BOOST_HANA_DEFINE_STRUCT(Scene, (std::vector<Node>, nodes));
 		};
-	}	// namespace v1
-}	// namespace gltfpp
+	}    // namespace v1
+}    // namespace gltfpp

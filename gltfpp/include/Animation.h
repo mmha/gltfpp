@@ -38,11 +38,11 @@ namespace gltfpp {
 			};
 #endif
 			BOOST_HANA_DEFINE_STRUCT(Animation,
-									 (std::vector<int>, channels),
-									 (std::vector<int>, samplers),
-									 (option<std::string>, name),
-									 (option<nlohmann::json>, extensions),
-									 (option<nlohmann::json>, extras));
+			                         (std::vector<int>, channels),
+			                         (std::vector<int>, samplers),
+			                         (option<std::string>, name),
+			                         (option<nlohmann::json>, extensions),
+			                         (option<nlohmann::json>, extras));
 		};
-	}	// namespace v1
-}	// namespace gltfpp
+	}    // namespace v1
+}    // namespace gltfpp

@@ -1,5 +1,5 @@
-#include "gltfpp.h"
 #include "common.h"
+#include "gltfpp.h"
 
 using namespace gltfpp;
 using nlohmann::json;

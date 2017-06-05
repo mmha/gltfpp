@@ -25,7 +25,7 @@ namespace gltfpp {
 				using value_t = std::true_type;
 				using type = Op<Args...>;
 			};
-		}	// namespace detail
+		}    // namespace detail
 
 		template <template <typename...> class Op, typename... Args>
 		using is_detected = typename detail::detector<nonesuch, void, Op, Args...>::value_t;
@@ -69,8 +69,8 @@ namespace gltfpp {
 				template <typename T>
 				struct is_nothrow_swappable<T, false> : std::false_type {};
 
-			}	// namespace swappable
-		}		 // namespace detail
+			}    // namespace swappable
+		}        // namespace detail
 
 		template <typename T>
 		using is_swappable = detail::swappable::is_swappable<T>;
@@ -106,8 +106,8 @@ namespace gltfpp {
 
 			template <typename T>
 			constexpr bool is_fundamental_json_type =
-				!is_enumeration<T> &&
-				disjunction<std::is_arithmetic<T>, is_any_of<T, std::string, nlohmann::json>>::value;
+			    !is_enumeration<T> &&
+			    disjunction<std::is_arithmetic<T>, is_any_of<T, std::string, nlohmann::json>>::value;
 
 			// Make this public as customization point?
 			template <typename T>
@@ -116,6 +116,6 @@ namespace gltfpp {
 			// FIXME proper concept checking
 			template <typename T>
 			constexpr bool is_field_aggregate = !is_fundamental_json_type<T> && !is_field_list<T> && !is_enumeration<T>;
-		}	// namespace detail
-	}		 // namespace v1
-}	// namespace gltfpp
+		}    // namespace detail
+	}        // namespace v1
+}    // namespace gltfpp

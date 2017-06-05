@@ -41,7 +41,7 @@ namespace gltfpp {
 					auto newCtx = ParseContext{ctx.root, std::addressof(*valIt)};
 					auto res = parse(target.value())(newCtx);
 					static_assert(std::is_same<gltf_result<ParseContext>, decltype(res)>{},
-								  "Return type of the parser function must be gltf_result<ParseContext>");
+					              "Return type of the parser function must be gltf_result<ParseContext>");
 				} else {
 					target = {};
 				}
@@ -57,7 +57,7 @@ namespace gltfpp {
 					auto newCtx = ParseContext{ctx.root, std::addressof(*valIt)};
 					auto res = parse(target)(newCtx);
 					static_assert(std::is_same<gltf_result<ParseContext>, decltype(res)>{},
-								  "Return type of the parser function must be gltf_result<ParseContext>");
+					              "Return type of the parser function must be gltf_result<ParseContext>");
 					if(!res) {
 						return res;
 					}
@@ -75,7 +75,7 @@ namespace gltfpp {
 					auto newCtx = ParseContext{ctx.root, std::addressof(*valIt)};
 					auto res = parse(target.value())(newCtx);
 					static_assert(std::is_same<gltf_result<ParseContext>, decltype(res)>{},
-								  "Return type of the parser function must be gltf_result<ParseContext>");
+					              "Return type of the parser function must be gltf_result<ParseContext>");
 				}
 				// defaulted<T> is forced to be initialized already, just exit if the default is not overwritten
 				return ctx;
@@ -93,7 +93,7 @@ namespace gltfpp {
 
 				auto res = fold(zip(names, refs), gltf_result<ParseContext>{ctx}, [&](auto c, auto entry) {
 					if(!c) {
-						return c;	// I hope the optimizer understands that...
+						return c;    // I hope the optimizer understands that...
 					}
 					auto name = to<char const *>(entry[size_c<0>]);
 					auto &member = entry[size_c<1>].get();
@@ -121,10 +121,7 @@ namespace gltfpp {
 						return ctx;
 					}
 					return make_unexpected(gltf_error::key_not_found);
-				}
-				catch(const std::domain_error &) {
-					return make_unexpected(gltf_error::type_error);
-				}
+				} catch(const std::domain_error &) { return make_unexpected(gltf_error::type_error); }
 			};
 		}
 
@@ -145,7 +142,7 @@ namespace gltfpp {
 				for(; out != target.end(); ++in, ++out) {
 					auto res = parse(*out)({ctx.root, &*in});
 					static_assert(std::is_same<gltf_result<ParseContext>, decltype(res)>{},
-								  "Return type of the parser function must be gltf_result<ParseContext>");
+					              "Return type of the parser function must be gltf_result<ParseContext>");
 					if(!res) {
 						return res;
 					}
@@ -173,8 +170,8 @@ namespace gltfpp {
 		template <typename CharInputIterator, typename ByteOutputIterator>
 		auto decode_embedded_base64(CharInputIterator first, CharInputIterator last, ByteOutputIterator out) noexcept {
 			using b64 = boost::archive::iterators::transform_width<
-				boost::archive::iterators::binary_from_base64<std::string::const_iterator>, 8, 6>;
+			    boost::archive::iterators::binary_from_base64<std::string::const_iterator>, 8, 6>;
 			return std::transform(b64(first), b64(last), out, [](char c) { return static_cast<byte>(c); });
 		}
-	}	// namespace v1
-}	// namespace gltfpp
+	}    // namespace v1
+}    // namespace gltfpp

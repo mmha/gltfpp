@@ -8,5 +8,5 @@ namespace gltfpp {
 		struct Skin {
 			// BOOST_HANA_DEFINE_STRUCT(Skin, (std::vector<Accessor>, accessors));
 		};
-	}	// namespace v1
-}	// namespace gltfpp
+	}    // namespace v1
+}    // namespace gltfpp

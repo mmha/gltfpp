@@ -41,7 +41,7 @@ TEST_CASE("Buffer_complete", "[Buffer]") {
 	auto str = reinterpret_cast<const char *>(buffer.uri->data());
 
 	const auto matched = std::mismatch(std::begin(expected_uri_data), std::end(expected_uri_data) - 1, str).first ==
-						 std::end(expected_uri_data) - 1;
+	                     std::end(expected_uri_data) - 1;
 	REQUIRE(matched);
 }
 
@@ -53,20 +53,20 @@ TEST_CASE("Buffer_missing_length", "[Buffer]") {
 
 TEST_CASE("Buffer_lorem_ipsum", "[Buffer]") {
 	constexpr char expected[] =
-		"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
-		" incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis no"
-		"strud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du"
-		"is aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu "
-		"fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in"
-		" culpa qui officia deserunt mollit anim id est laborum.";
+	    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor"
+	    " incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis no"
+	    "strud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Du"
+	    "is aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu "
+	    "fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in"
+	    " culpa qui officia deserunt mollit anim id est laborum.";
 
-	common_fixture<Buffer> fixture("data/buffer_lorem_ipsum.json");	// has 2 byte padding
+	common_fixture<Buffer> fixture("data/buffer_lorem_ipsum.json");    // has 2 byte padding
 	auto result = parse(fixture.unit_under_test)(fixture.ctx);
 	CHECK_GLTF_RESULT(result);
 
 	auto &buffer = fixture.unit_under_test;
-	REQUIRE(buffer.uri->size() == strlen(expected) + 2);	// TODO Should the padding be removed?
+	REQUIRE(buffer.uri->size() == strlen(expected) + 2);    // TODO Should the padding be removed?
 	const auto decoded_correctly = std::equal(buffer.uri->begin(), buffer.uri->end() - 2, expected,
-											  [](byte buf, char str) { return to_integer<char>(buf) == str; });
+	                                          [](byte buf, char str) { return to_integer<char>(buf) == str; });
 	REQUIRE(decoded_correctly);
 }
